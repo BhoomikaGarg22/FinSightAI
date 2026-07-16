@@ -46,11 +46,12 @@ def show_dashboard():
 
     with c3:
         with st.container(border=True):
-            st.metric("📄 Reports", "1,284", "+124")
-
+            st.metric("📄 Reports", company_data["reports"]
+        )
     with c4:
         with st.container(border=True):
-            st.metric("🤖 AI Accuracy", "92%", "+1.5%")
+            st.metric("🤖 AI Accuracy",company_data["ai_accuracy"]
+        )
 
     st.write("")
 
