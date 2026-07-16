@@ -220,53 +220,53 @@ personal computers, tablets, wearables and services.
  • Institutional buying activity remains strong
  """)
 
-st.divider()
+    st.divider()
 
     # ==========================================
     # RISK FACTORS
     # ==========================================
-st.subheader("⚠ Risk Factors")
+    st.subheader("⚠ Risk Factors")
 
-st.warning("""
-• High valuation compared to industry peers
+    st.warning("""
+    • High valuation compared to industry peers
 
-• Market volatility may affect short-term performance
+    • Market volatility may affect short-term performance
 
-• Regulatory challenges in global markets
+    • Regulatory challenges in global markets
 
-• Rising competition in AI sector
-""")
+    • Rising competition in AI sector
+ """)
 
-st.divider()
+    st.divider()
 
     # ==========================================
     # QUICK ACTIONS
     # ==========================================
 
-st.subheader("⚡ Quick Actions")
+    st.subheader("⚡ Quick Actions")
 
-b1, b2, b3 = st.columns(3)
+    b1, b2, b3 = st.columns(3)
 
-with b1:
+    with b1:
         st.button(
             "📄 Download Report",
             key="stock_download"
         )
 
-with b2:
+    with b2:
         st.button(
             "⭐ Add to Watchlist",
             key="stock_watchlist"
         )
 
-with b3:
+    with b3:
         st.button(
             "🤖 Ask AI",
             key="stock_ai"
         )
 
-st.divider()
+    st.divider()
 
-st.caption(
+    st.caption(
         "© 2026 FinSight AI | AI-Powered Financial Research Platform"
     )

@@ -1,16 +1,17 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from data.companies import companies
 
-st.info("🧪 Demo Mode • Using sample financial data. Live AI integration in progress.")
+
+from data.companies import companies
+from data.charts import get_chart_data
+
 
 def show_dashboard():
 
-    # ======================================================
-    # HEADER
-    # ======================================================
+    st.info("🧪 Demo Mode • Using sample financial data. Live AI integration in progress.")
 
+    # HEADER
     st.title("💹 FinSight AI Dashboard")
     st.caption("AI-powered financial research and investment insights.")
 
@@ -67,17 +68,7 @@ def show_dashboard():
 
             st.subheader("📈 Market Overview")
 
-            df = pd.DataFrame({
-                "Date": pd.date_range("2025-01-01", periods=30),
-                "Price": [
-                    180,181,182,181,183,
-                    184,185,186,187,188,
-                    187,186,188,189,190,
-                    191,190,192,193,194,
-                    193,194,195,196,197,
-                    196,198,199,200,201
-                ]
-            })
+            df = get_chart_data(company)
 
             fig = px.line(
                 df,
@@ -87,8 +78,12 @@ def show_dashboard():
             )
 
             fig.update_layout(
-                height=420,
-                margin=dict(l=10, r=10, t=20, b=10)
+             template="plotly_dark",
+             paper_bgcolor="rgba(0,0,0,0)",
+             plot_bgcolor="rgba(0,0,0,0)",
+             font=dict(color="#F8FAFC"),
+             margin=dict(l=20, r=20, t=20, b=20),
+             height=420,
             )
 
             st.plotly_chart(fig, use_container_width=True)
@@ -123,7 +118,13 @@ def show_dashboard():
                 hole=0.45
             )
 
-            pie.update_layout(height=420)
+            pie.update_layout(
+             template="plotly_dark",
+             paper_bgcolor="rgba(0,0,0,0)",
+             plot_bgcolor="rgba(0,0,0,0)",
+             font=dict(color="#F8FAFC"),
+             height=420,
+            )
 
             st.plotly_chart(
                 pie,

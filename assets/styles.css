@@ -1,6 +1,6 @@
-/* -------------------------------
-   Hide Streamlit Default UI
--------------------------------- */
+/* =====================================================
+   Hide Streamlit Default Elements
+===================================================== */
 
 #MainMenu {
     visibility: hidden;
@@ -11,69 +11,335 @@ footer {
 }
 
 header {
-    visibility: hidden;
+    background: transparent;
 }
 
-/* -------------------------------
+/* =====================================================
    Main Layout
--------------------------------- */
+===================================================== */
 
 .block-container {
     padding-top: 2rem;
     padding-bottom: 2rem;
     padding-left: 2.5rem;
     padding-right: 2.5rem;
+    max-width: 1450px;
 }
 
-/* -------------------------------
-   Dashboard Cards
--------------------------------- */
+/* =====================================================
+   Sidebar
+===================================================== */
+
+section[data-testid="stSidebar"] {
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+}
+
+section[data-testid="stSidebar"] h1 {
+    color: #111827;
+}
+
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] label {
+    color: #6b7280;
+}
+
+/* =====================================================
+   Headers
+===================================================== */
+
+h1 {
+    color: #1F2937;
+    font-weight: 800;
+}
+
+h2, h3 {
+    color: #374151;
+}
+
+p {
+    color: #6b7280;
+}
+
+/* =====================================================
+   Cards
+===================================================== */
 
 .metric-card {
-    background-color: var(--secondary-background-color);
-    border-radius: 14px;
-    padding: 20px;
-    border: 1px solid rgba(128,128,128,.15);
-    transition: 0.3s;
-    margin-bottom: 15px;
+    background: white;
+    border-radius: 16px;
+    padding: 22px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    transition: .25s;
+    margin-bottom: 18px;
 }
 
 .metric-card:hover {
+
     transform: translateY(-3px);
+
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+
 }
 
 .metric-title {
-    font-size: 15px;
-    color: gray;
+
+    color: #6b7280;
+
+    font-size: 14px;
+
 }
 
 .metric-value {
+
     font-size: 34px;
-    font-weight: bold;
-    margin-top: 10px;
+
+    font-weight: 700;
+
+    color: #111827;
+
+    margin-top: 8px;
+
 }
 
 .metric-change-positive {
+
     color: #16a34a;
+
     font-weight: 600;
+
 }
 
 .metric-change-negative {
+
     color: #dc2626;
+
     font-weight: 600;
+
 }
 
-/* -------------------------------
+/* =====================================================
+   Containers
+===================================================== */
+
+div[data-testid="stVerticalBlock"] > div:has(div[data-testid="stMetric"]) {
+
+    background: white;
+
+    border-radius: 16px;
+
+    border: 1px solid #e5e7eb;
+
+    padding: 10px;
+
+}
+
+div[data-testid="stContainer"] {
+
+    border-radius: 18px;
+
+}
+
+/* =====================================================
+   Text Input
+===================================================== */
+
+.stTextInput input {
+    border-radius: 10px;
+    border: 1px solid #D1D5DB;
+    padding: 0.6rem;
+    background: white;
+}
+
+.stTextInput input:focus {
+    border: 1px solid #4F46E5;
+    box-shadow: 0 0 0 2px rgba(79,70,229,0.2);
+}
+
+/* =====================================================
+   Buttons
+===================================================== */
+
+/* Primary Button */
+
+.stButton > button {
+    background: #4F46E5;
+    color: white !important;
+    border: none;
+    border-radius: 10px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    font-size: 15px;
+    transition: 0.25s;
+}
+
+.stButton > button:hover {
+    background: #4338CA;
+    color: white !important;
+    transform: translateY(-2px);
+}
+
+.stButton > button:active {
+    background: #3730A3;
+}
+
+/* =====================================================
+   Success
+===================================================== */
+
+div[data-testid="stAlert"] {
+
+    border-radius: 14px;
+
+}
+
+/* =====================================================
+   Divider
+===================================================== */
+
+hr {
+    border: none;
+    border-top: 1px solid #E5E7EB;
+}
+
+/* =====================================================
+   Charts
+===================================================== */
+
+.js-plotly-plot {
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    border: 1px solid #e5e7eb;
+
+}
+
+/* =====================================================
    Section Titles
--------------------------------- */
+===================================================== */
 
 .section-title {
-    font-size: 28px;
+
+    font-size: 30px;
+
     font-weight: 700;
-    margin-bottom: 10px;
+
+    color: #111827;
+
 }
 
 .section-subtitle {
-    color: gray;
-    margin-bottom: 30px;
+
+    color: #6b7280;
+
 }
+
+/* =====================================================
+   DataFrames
+===================================================== */
+
+.stDataFrame {
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+}
+
+/* =====================================================
+   Metric Widgets
+===================================================== */
+
+div[data-testid="metric-container"] {
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    padding: 18px;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,.04);
+
+}
+
+div[data-testid="metric-container"]:hover {
+
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+
+}
+
+/* =====================================================
+   Expanders
+===================================================== */
+
+details {
+
+    border-radius: 12px;
+
+    border: 1px solid #e5e7eb;
+
+}
+
+/* =====================================================
+   Recommendation Cards
+===================================================== */
+
+.recommend-card {
+
+    background: linear-gradient(135deg,#2563eb,#1e40af);
+
+    color: white;
+
+    padding: 22px;
+
+    border-radius: 18px;
+
+    box-shadow: 0 8px 25px rgba(37,99,235,.2);
+
+}
+
+/* =====================================================
+   Smooth Animation
+===================================================== */
+
+* {
+
+    transition: background-color .2s ease,
+
+                border-color .2s ease,
+
+                box-shadow .2s ease;
+
+}
+
+/* =========================================
+   Modern Buttons
+========================================= */
+
+/* Every button */
+
+.stButton>button{
+    border-radius:12px;
+    font-weight:600;
+    border:none;
+    transition:.25s;
+    height:44px;
+}
+
+/* Hover */
+
+.stButton>button:hover{
+    transform:translateY(-2px);
+}
+
+/* Focus */
+
+.stButton>button:focus{
+    box-shadow:none;
+}
+
