@@ -1,85 +1,237 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from data.companies import companies
 
+st.info("🧪 Demo Mode • Using sample financial data. Live AI integration in progress.")
 
 def show_dashboard():
 
-    st.title("Welcome to FinSight AI")
+    # ======================================================
+    # HEADER
+    # ======================================================
 
-    st.markdown(
-        "Your AI-powered assistant for smarter financial research and investment insights."
-    )
+    st.title("💹 FinSight AI Dashboard")
+    st.caption("AI-powered financial research and investment insights.")
 
     company = st.text_input(
         "Search Company",
-        placeholder="Apple, Tesla, NVIDIA..."
-    )
+        value=st.session_state.get("company", "Apple")
+)
 
-    col1, col2 = st.columns(2)
+    if company:
+     st.session_state["company"] = company
 
-    with col1:
-        st.metric(
-            "Live Stock Price",
-            "$189.42",
-            "+2.14%"
-        )
+    company = st.session_state.get("company", "Apple")
 
-    with col2:
-        st.metric(
-            "Market Sentiment",
-            "Bullish",
-            "+8.6%"
-        )
+    company_data = companies.get(
+        company,
+        companies["Apple"]
+)
+    st.write("")
 
-    col3, col4 = st.columns(2)
+    # ======================================================
+    # KPI CARDS
+    # ======================================================
 
-    with col3:
-        st.metric(
-            "Reports Analyzed",
-            "1284",
-            "+124"
-        )
-
-    with col4:
-        st.metric(
-            "AI Queries Today",
-            "3942",
-            "-1.2%"
-        )
-
-    df = pd.DataFrame({
-        "Day": ["Mon", "Tue", "Wed", "Thu", "Fri"],
-        "Price": [182, 184, 183, 188, 189]
-    })
-
-    fig = px.line(df, x="Day", y="Price")
-
-    st.plotly_chart(fig, use_container_width=True)
-
-    st.subheader("Latest Financial News")
-
-    st.info("Apple launches new AI-powered services.")
-    st.info("Tesla shares gain after strong quarterly earnings.")
-    st.info("NVIDIA announces next-generation AI chips.")
-
-    st.subheader("AI Summary")
-
-    st.success("""
-Overall market sentiment appears bullish.
-
-Technology stocks continue showing strong momentum driven by AI innovation and positive earnings.
-""")
-
-    st.subheader("Quick Actions")
-
-    c1, c2, c3 = st.columns(3)
+    c1, c2, c3, c4 = st.columns(4)
 
     with c1:
-        st.button("Analyze Stock")
+        with st.container(border=True):
+            st.metric("📈 NIFTY 50", "24,385", "+0.82%")
 
     with c2:
-        st.button("Upload Report")
+        with st.container(border=True):
+            st.metric("🏦 SENSEX", "80,642", "+0.65%")
 
     with c3:
-        st.button("Ask AI") 
+        with st.container(border=True):
+            st.metric("📄 Reports", "1,284", "+124")
+
+    with c4:
+        with st.container(border=True):
+            st.metric("🤖 AI Accuracy", "92%", "+1.5%")
+
+    st.write("")
+
+    # ======================================================
+    # CHARTS
+    # ======================================================
+
+    left, right = st.columns([2, 1])
+
+    with left:
+
+        with st.container(border=True):
+
+            st.subheader("📈 Market Overview")
+
+            df = pd.DataFrame({
+                "Date": pd.date_range("2025-01-01", periods=30),
+                "Price": [
+                    180,181,182,181,183,
+                    184,185,186,187,188,
+                    187,186,188,189,190,
+                    191,190,192,193,194,
+                    193,194,195,196,197,
+                    196,198,199,200,201
+                ]
+            })
+
+            fig = px.line(
+                df,
+                x="Date",
+                y="Price",
+                markers=True
+            )
+
+            fig.update_layout(
+                height=420,
+                margin=dict(l=10, r=10, t=20, b=10)
+            )
+
+            st.plotly_chart(fig, use_container_width=True)
+
+    with right:
+
+        with st.container(border=True):
+
+            st.subheader("📊 Sector Allocation")
+
+            sector_df = pd.DataFrame({
+                "Sector": [
+                    "Technology",
+                    "Finance",
+                    "Healthcare",
+                    "Energy",
+                    "Others"
+                ],
+                "Allocation": [
+                    38,
+                    22,
+                    18,
+                    12,
+                    10
+                ]
+            })
+
+            pie = px.pie(
+                sector_df,
+                names="Sector",
+                values="Allocation",
+                hole=0.45
+            )
+
+            pie.update_layout(height=420)
+
+            st.plotly_chart(
+                pie,
+                use_container_width=True
+            )
+
+    st.write("")
+
+    # ======================================================
+    # TRENDING + NEWS
+    # ======================================================
+
+    left, right = st.columns(2)
+
+    with left:
+
+        with st.container(border=True):
+
+            st.subheader("🔥 Trending Stocks")
+
+            stocks = [
+                ("Apple", "$189.42", "+2.4%"),
+                ("NVIDIA", "$134.15", "+4.8%"),
+                ("Tesla", "$252.61", "+1.6%"),
+                ("Microsoft", "$442.18", "+2.1%")
+            ]
+
+            for name, price, change in stocks:
+                st.markdown(
+                    f"**{name}** &nbsp;&nbsp; {price} &nbsp;&nbsp; 🟢 {change}"
+                )
+
+    with right:
+
+        with st.container(border=True):
+
+            st.subheader("📰 Latest Headlines")
+
+            st.info("Apple expands AI investments.")
+            st.info("NVIDIA reports record quarterly revenue.")
+            st.info("Tesla announces new Gigafactory.")
+            st.info("Microsoft launches new Copilot features.")
+
+    st.write("")
+
+    # ======================================================
+    # AI INSIGHT
+    # ======================================================
+
+    with st.container(border=True):
+
+        st.subheader("🤖 Today's AI Insight")
+
+        st.success(
+            """
+Technology stocks continue showing strong momentum.
+
+✅ AI adoption is accelerating.
+
+✅ Investor sentiment remains positive.
+
+✅ Cloud and semiconductor sectors are expected to outperform.
+
+**Overall Recommendation: BUY**
+
+Confidence Score: **92%**
+"""
+        )
+
+    st.write("")
+
+    # ======================================================
+    # QUICK ACTIONS
+    # ======================================================
+
+    with st.container(border=True):
+
+        st.subheader("⚡ Quick Actions")
+
+        b1, b2, b3, b4 = st.columns(4)
+
+        with b1:
+            st.button(
+                "📈 Analyze",
+                key="dash_analyze",
+                use_container_width=True
+            )
+
+        with b2:
+            st.button(
+                "📄 Reports",
+                key="dash_reports",
+                use_container_width=True
+            )
+
+        with b3:
+            st.button(
+                "📰 News",
+                key="dash_news",
+                use_container_width=True
+            )
+
+        with b4:
+            st.button(
+                "🤖 AI Chat",
+                key="dash_chat",
+                use_container_width=True
+            )
+
+    st.divider()
+
+    st.caption("© 2026 FinSight AI | AI-Powered Financial Research Platform")

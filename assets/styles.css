@@ -1,0 +1,79 @@
+/* -------------------------------
+   Hide Streamlit Default UI
+-------------------------------- */
+
+#MainMenu {
+    visibility: hidden;
+}
+
+footer {
+    visibility: hidden;
+}
+
+header {
+    visibility: hidden;
+}
+
+/* -------------------------------
+   Main Layout
+-------------------------------- */
+
+.block-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+}
+
+/* -------------------------------
+   Dashboard Cards
+-------------------------------- */
+
+.metric-card {
+    background-color: var(--secondary-background-color);
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid rgba(128,128,128,.15);
+    transition: 0.3s;
+    margin-bottom: 15px;
+}
+
+.metric-card:hover {
+    transform: translateY(-3px);
+}
+
+.metric-title {
+    font-size: 15px;
+    color: gray;
+}
+
+.metric-value {
+    font-size: 34px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.metric-change-positive {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.metric-change-negative {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+/* -------------------------------
+   Section Titles
+-------------------------------- */
+
+.section-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    color: gray;
+    margin-bottom: 30px;
+}
