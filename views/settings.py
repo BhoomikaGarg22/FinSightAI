@@ -86,60 +86,6 @@ def show_settings():
     st.write("")
 
     # =====================================================
-    # API STATUS
-    # =====================================================
-
-    with st.container(border=True):
-
-        st.subheader("🔌 Connected Services")
-
-        c1, c2 = st.columns(2)
-
-        with c1:
-            st.success("✅ Gemini API")
-
-        with c2:
-            st.success("✅ Financial News API")
-
-        c3, c4 = st.columns(2)
-
-        with c3:
-            st.success("✅ Stock Market API")
-
-        with c4:
-            st.info("⏳ Database Connection")
-
-    st.write("")
-
-    # =====================================================
-    # ABOUT
-    # =====================================================
-
-    with st.container(border=True):
-
-        st.subheader("ℹ️ About FinSight AI")
-
-        st.markdown("""
-**Version:** 1.0
-
-**Developed for:** Hackathon 2026
-
-**Technology Stack**
-
-- Streamlit
-- Python
-- Plotly
-- Gemini AI
-- Financial APIs
-
-FinSight AI is an AI-powered financial research assistant
-that helps investors analyze stocks, company reports,
-market news and financial sentiment.
-""")
-
-    st.write("")
-
-    # =====================================================
     # ACTIONS
     # =====================================================
 

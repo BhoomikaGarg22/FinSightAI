@@ -190,48 +190,10 @@ Technology stocks continue showing strong momentum.
 
 Confidence Score: **92%**
 """
-        )
+    )
 
     st.write("")
-
-    # ======================================================
-    # QUICK ACTIONS
-    # ======================================================
-
-    with st.container(border=True):
-
-        st.subheader("⚡ Quick Actions")
-
-        b1, b2, b3, b4 = st.columns(4)
-
-        with b1:
-            st.button(
-                "📈 Analyze",
-                key="dash_analyze",
-                use_container_width=True
-            )
-
-        with b2:
-            st.button(
-                "📄 Reports",
-                key="dash_reports",
-                use_container_width=True
-            )
-
-        with b3:
-            st.button(
-                "📰 News",
-                key="dash_news",
-                use_container_width=True
-            )
-
-        with b4:
-            st.button(
-                "🤖 AI Chat",
-                key="dash_chat",
-                use_container_width=True
-            )
-
+    
     st.divider()
 
     st.caption("© 2026 FinSight AI | AI-Powered Financial Research Platform")

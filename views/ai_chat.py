@@ -89,53 +89,6 @@ Confidence: **91%**
 
     st.write("")
 
-    # =====================================================
-    # AI CAPABILITIES
-    # =====================================================
-
-    left, right = st.columns(2)
-
-    with left:
-
-        with st.container(border=True):
-
-            st.subheader("🧠 AI Capabilities")
-
-            st.markdown("""
-- Financial Report Q&A
-
-- Stock Analysis
-
-- Risk Identification
-
-- Company Comparison
-
-- Investment Insights
-
-- Financial Ratio Explanation
-""")
-
-    with right:
-
-        with st.container(border=True):
-
-            st.subheader("⚡ Powered By")
-
-            st.markdown("""
-✅ Gemini API
-
-✅ Financial News API
-
-✅ Stock Market API
-
-✅ AI Sentiment Analysis
-
-✅ Report Intelligence
-
-✅ Retrieval-Augmented Generation (RAG)
-""")
-
-    st.write("")
 
     # =====================================================
     # QUICK ACTIONS
