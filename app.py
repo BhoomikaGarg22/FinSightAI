@@ -1,3 +1,4 @@
+from views.stock_analysis_v2 import show_stock_analysis_v2
 import streamlit as st
 
 # -----------------------------------
@@ -39,7 +40,7 @@ if selected == "Dashboard":
     show_dashboard()
 
 elif selected == "Stock Analysis":
-    show_stock_analysis()
+    show_stock_analysis_v2()
 
 elif selected == "Report Analyzer":
     show_report_analyzer()

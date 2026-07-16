@@ -1,18 +1,21 @@
 companies = {
 
     "Apple": {
-        "ticker": "AAPL",
-        "sector": "Technology",
-        "industry": "Consumer Electronics",
-        "price": "$189.42",
-        "market_cap": "$2.9T",
-        "pe_ratio": "31.2",
-        "high_52": "$199.80",
-        "recommendation": "BUY",
-        "confidence": "92%",
-        "trend": "Bullish",
-        "description": "Apple designs and manufactures iPhone, Mac, iPad, Apple Watch and AI-powered digital services."
-    },
+    "ticker": "AAPL",
+    "sector": "Technology",
+    "industry": "Consumer Electronics",
+    "price": "$189.42",
+    "market_cap": "$2.9T",
+    "pe_ratio": "31.2",
+    "high_52": "$199.80",
+    "recommendation": "BUY",
+    "confidence": "92%",
+    "trend": "Bullish",
+    "rsi": "64",
+    "macd": "Buy Signal",
+    "moving_average": "Bullish",
+    "description": "Apple designs and manufactures iPhone, Mac, iPad, Apple Watch and AI-powered digital services."
+},
 
     "Tesla": {
         "ticker": "TSLA",
@@ -25,7 +28,10 @@ companies = {
         "recommendation": "HOLD",
         "confidence": "81%",
         "trend": "Neutral",
-        "description": "Tesla develops electric vehicles, battery storage systems and autonomous driving technology."
+        "description": "Tesla develops electric vehicles, battery storage systems and autonomous driving technology.",
+        "rsi": "64",
+        "macd": "Buy Signal",
+        "moving_average": "Bullish",
     },
 
     "NVIDIA": {
@@ -39,7 +45,10 @@ companies = {
         "recommendation": "BUY",
         "confidence": "95%",
         "trend": "Bullish",
-        "description": "NVIDIA develops GPUs and AI computing platforms powering modern artificial intelligence."
+        "description": "NVIDIA develops GPUs and AI computing platforms powering modern artificial intelligence.",
+        "rsi": "64",
+        "macd": "Buy Signal",
+        "moving_average": "Bullish",
     },
 
     "Microsoft": {
@@ -53,7 +62,10 @@ companies = {
         "recommendation": "BUY",
         "confidence": "90%",
         "trend": "Bullish",
-        "description": "Microsoft develops cloud computing, AI solutions, enterprise software and productivity tools."
+        "description": "Microsoft develops cloud computing, AI solutions, enterprise software and productivity tools.",
+        "rsi": "64",
+        "macd": "Buy Signal",
+        "moving_average": "Bullish",
     }
 
 }
