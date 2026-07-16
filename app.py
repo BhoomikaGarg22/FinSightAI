@@ -13,13 +13,13 @@ st.set_page_config(
 # -----------------------------------
 # Load CSS
 # -----------------------------------
-with open("assets/styles.css") as f:
+with open("assets/css/common.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # -----------------------------------
 # Imports
 # -----------------------------------
-from utils.sidebar import show_sidebar
+from components.sidebar import show_sidebar
 
 from views.dashboard import show_dashboard
 from views.stock_analysis import show_stock_analysis
