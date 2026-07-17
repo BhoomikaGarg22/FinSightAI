@@ -15,32 +15,36 @@ def show_news_sentiment():
     )
 
     # =====================================================
-    # SEARCH
-    # =====================================================
+# SEARCH
+# =====================================================
 
-    c1, c2 = st.columns([5, 1])
+    st.markdown("##### Search Company")
 
-    with c1:
+    col1, col2 = st.columns([6, 1], vertical_alignment="bottom")
+
+    with col1:
         company = st.text_input(
-    "Search Company",
-    value=st.session_state.get("company", "Apple")
-)
+            "",
+            value=st.session_state.get("company", "Apple"),
+            label_visibility="collapsed",
+            placeholder="Enter company name..."
+        )
 
         if company:
-         st.session_state["company"] = company
+            st.session_state["company"] = company
 
-    with c2:
+    with col2:
+        analyze = st.button(
+            "🔍 Analyze",
+            key="news_analyze",
+            use_container_width=True
+        )
 
-     if st.button(
-        "Analyze",
-        key="news_analyze",
-        use_container_width=True
-    ):
-
-        with st.spinner("Analyzing news..."):
+    if analyze:
+        with st.spinner("Analyzing latest news..."):
             time.sleep(2)
 
-        st.success("✅ News analysis complete!")
+        st.success("News analysis complete!")
 
     st.write("")
 
