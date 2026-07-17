@@ -645,3 +645,53 @@ hr{
     }
 
 }
+
+/* ==========================================
+   Hide Image Fullscreen Button
+========================================== */
+
+button[data-testid="StyledFullScreenButton"]{
+    display:none !important;
+}
+
+/* Older Streamlit versions */
+
+[data-testid="stImage"] button{
+    display:none !important;
+}
+
+/* Hide image fullscreen button */
+
+button[title="View fullscreen"]{
+    display:none !important;
+}
+
+[data-testid="StyledFullScreenButton"]{
+    display:none !important;
+}
+
+[data-testid="stImage"] button{
+    display:none !important;
+}
+
+/* ==========================================
+   Hide Streamlit Image Toolbar
+========================================== */
+
+button[data-testid="stBaseButton-elementToolbar"]{
+    display:none !important;
+}
+
+button[aria-label="Fullscreen"]{
+    display:none !important;
+}
+
+button[kind="elementToolbar"]{
+    display:none !important;
+}
+
+/* Sidebar padding */
+
+section[data-testid="stSidebar"] .block-container{
+    padding-top:0.6rem !important;
+}

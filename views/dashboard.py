@@ -19,7 +19,7 @@ def show_dashboard():
 
         st.markdown(
             """
-            # 👋 Welcome to FinSight AI
+            # Welcome to FinSight AI
 
             ### AI-powered Financial Research Platform
 
@@ -31,7 +31,7 @@ def show_dashboard():
     with right:
 
         st.metric(
-            "🟢 Market Status",
+            "Market Status",
             "OPEN"
         )
 
@@ -42,7 +42,7 @@ def show_dashboard():
     with left:
 
         company = st.text_input(
-            "🔍 Search Company",
+            "Search Company",
             value=st.session_state.get("company", "Apple"),
             placeholder="Search Apple, Tesla, NVIDIA..."
         )
@@ -123,7 +123,7 @@ def show_dashboard():
 
         with st.container(border=True):
 
-            st.subheader("📈 Market Overview")
+            st.subheader("Market Overview")
 
             df = get_chart_data(company)
 
@@ -199,7 +199,7 @@ def show_dashboard():
 
         with st.container(border=True):
 
-            st.subheader("📊 Sector Allocation")
+            st.subheader("Sector Allocation")
 
             sector_df = pd.DataFrame({
                 "Sector": [
@@ -289,13 +289,13 @@ def show_dashboard():
 
         with st.container(border=True):
 
-            st.subheader("🔥 Trending Stocks")
+            st.subheader("Trending Stocks")
 
             stocks = [
-             ("🍎 Apple", "$189.42", "+2.4%"),
-             ("🟢 NVIDIA", "$134.15", "+4.8%"),
-             ("🚗 Tesla", "$252.61", "+1.6%"),
-             ("🪟 Microsoft", "$442.18", "+2.1%")
+             ("Apple", "$189.42", "+2.4%"),
+             ("NVIDIA", "$134.15", "+4.8%"),
+             ("Tesla", "$252.61", "+1.6%"),
+             ("Microsoft", "$442.18", "+2.1%")
             ]
 
             for name, price, change in stocks:
@@ -327,17 +327,17 @@ def show_dashboard():
 
         with st.container(border=True):
 
-            st.subheader("📰 Latest Headlines")
+            st.subheader("Latest Headlines")
 
             news = [
 
-                  ("Apple expands AI investments.", "Technology", "2 min ago", "🟢 Bullish"),
+                  ("Apple expands AI investments.", "Technology", "2 min ago", "Bullish"),
 
-                  ("NVIDIA reports record quarterly revenue.", "Earnings", "15 min ago", "🟢 Bullish"),
+                  ("NVIDIA reports record quarterly revenue.", "Earnings", "15 min ago", "Bullish"),
 
-                  ("Tesla announces new Gigafactory.", "Automobile", "32 min ago", "🟡 Neutral"),
+                  ("Tesla announces new Gigafactory.", "Automobile", "32 min ago", "Neutral"),
 
-                  ("Microsoft launches new Copilot features.", "Artificial Intelligence", "1 hour ago", "🟢 Bullish"),
+                  ("Microsoft launches new Copilot features.", "Artificial Intelligence", "1 hour ago", "Bullish"),
 
             ]
 
@@ -362,7 +362,7 @@ def show_dashboard():
             </span>
 
             <span class="news-time">
-            🕒 {time}
+             {time}
             </span>
 
             <span class="news-sentiment"
@@ -385,7 +385,7 @@ def show_dashboard():
 
     with st.container(border=True):
 
-        st.subheader("🤖 AI Investment Recommendation")
+        st.subheader("AI Investment Recommendation")
 
         st.markdown(
             """
@@ -395,7 +395,7 @@ def show_dashboard():
 
     <div>
 
-    <h3>🟢 BUY</h3>
+    <h3>BUY</h3>
 
     <p>Confidence Score: <b>92%</b></p>
 
@@ -411,7 +411,7 @@ def show_dashboard():
 
     <hr>
 
-    <h4>📈 Why the AI recommends BUY</h4>
+    <h4>Why the AI recommends BUY</h4>
 
     <ul>
 
