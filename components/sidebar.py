@@ -44,18 +44,28 @@ def show_sidebar():
         # Navigation
         # =====================================
 
+        pages = [
+            "Dashboard",
+            "Stock Analysis",
+            "Report Analyzer",
+            "News & Sentiment",
+            "AI Chat",
+            "Settings",
+        ]
+
+        # Initialize page
+        if "page" not in st.session_state:
+         st.session_state.page = "Dashboard"
+
         page = st.radio(
-            "",
-            [
-                "Dashboard",
-                "Stock Analysis",
-                "Report Analyzer",
-                "News & Sentiment",
-                "AI Chat",
-                "Settings",
-            ],
-            label_visibility="collapsed",
+         "",
+         pages,
+         index=pages.index(st.session_state.page),
+         label_visibility="collapsed",
         )
+
+        # Keep session_state in sync
+        st.session_state.page = page
 
     return (
         page.replace("🏠 ", "")

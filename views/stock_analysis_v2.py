@@ -1,7 +1,7 @@
 import streamlit as st
 import time
 import plotly.express as px
-
+from utils.navigation import navigate
 from components.ui_components import (
     section_title,
     metric_card,
@@ -229,9 +229,9 @@ def show_stock_analysis_v2():
      company_data["confidence"]
 )
             
-            st.divider()
+    st.divider()
 
-    section_title("📊 Key Financial Ratios")
+    section_title("Key Financial Ratios")
 
     st.caption(
         "Important financial metrics for evaluating company performance."
@@ -283,7 +283,7 @@ def show_stock_analysis_v2():
 
             st.write("")
 
-    section_title("📝 AI Executive Summary")
+    section_title("AI Executive Summary")
 
     st.caption(
         "Quick AI-generated overview of the company's current outlook."
@@ -313,3 +313,38 @@ def show_stock_analysis_v2():
     **Overall Rating:** **{company_data['recommendation']}**
     """
         )
+
+    st.write("")
+
+# =====================================================
+# QUICK ACTIONS
+# =====================================================
+
+    section_title("Quick Actions")
+
+    b1, b2, b3 = st.columns(3)
+
+    with b1:
+        if st.button(
+            "View News",
+            use_container_width=True
+        ):
+            navigate("News & Sentiment")
+
+    with b2:
+        if st.button(
+            "Ask AI",
+            use_container_width=True
+        ):
+            navigate("AI Chat")
+
+    with b3:
+        if st.button(
+            "Generate Report",
+            use_container_width=True
+        ):
+            navigate("Report Analyzer")
+
+    st.divider()
+
+    st.caption("© 2026 FinSight AI | AI-Powered Financial Research Platform")    

@@ -1,8 +1,12 @@
 import streamlit as st
-
+from utils.navigation import navigate
 
 def show_report_analyzer():
-
+    st.image(
+        "assets/images/upload_document.png",
+        use_container_width=True
+    )
+    
     # =====================================================
     # HEADER
     # =====================================================
@@ -40,7 +44,7 @@ def show_report_analyzer():
 
         with st.container(border=True):
 
-            st.markdown("## 📤 Upload Financial Report")
+            st.markdown("## Upload Financial Report")
 
             st.caption(
              "Supported formats: Annual Reports • 10-K • Quarterly Reports • Earnings Reports"
@@ -66,32 +70,41 @@ def show_report_analyzer():
 
                 with c1:
                  st.metric(
-                 "📄 File",
+                 "File",
                  uploaded_file.name
              )
 
                 with c2:
                  st.metric(
-                 "📦 Size",
+                 "Size",
                  f"{round(uploaded_file.size/1024,2)} KB"
             )
                 st.button(
-                    "🤖 Analyze with AI",
+                    "Analyze with AI",
                     key="analyze_report",
                     use_container_width=True
                 )
 
             else:
 
-                st.info(
-                    "Upload a financial report to begin AI analysis."
-                )
+             st.image(
+              upload_image,
+              width=220
+             )
+
+             st.info(
+              "Upload a financial report to begin AI analysis."
+             )
 
     with right:
+        st.image(
+            "assets/images/upload_document.jpg",
+            use_container_width=True
+        )
 
         with st.container(border=True):
 
-            st.subheader("🤖 AI Features")
+            st.subheader("AI Features")
 
             st.markdown("""
 ✅ Executive Summary
@@ -119,27 +132,79 @@ def show_report_analyzer():
 
     with st.container(border=True):
 
-        st.subheader("⚙️ Processing Status")
+        st.subheader("AI Processing Pipeline")
 
-        st.progress(100)
+        progress = st.progress(100)
 
-        st.success("Analysis Ready")
+        st.write("")
+
+        c1, c2 = st.columns(2)
+
+        with c1:
+
+            st.success("✅ Reading PDF")
+
+            st.success("✅ Extracting Financial Data")
+
+            st.success("✅ Detecting Risks")
+
+        with c2:
+
+            st.success("✅ Generating AI Summary")
+
+            st.success("✅ Calculating Financial Ratios")
+
+            st.success("✅ Preparing Recommendation")
+
+        st.write("")
+
+        st.info(
+            "AI analysis completed successfully. The report is ready for review."
+        )
 
     st.write("")
 
     # =====================================================
-    # FINANCIAL METRICS
-    # =====================================================
+# FINANCIAL HIGHLIGHTS
+# =====================================================
 
-    st.subheader("📊 Financial Highlights")
+    st.markdown("## Financial Highlights")
+
+    st.caption("Key financial metrics extracted from the uploaded report.")
 
     c1, c2, c3, c4 = st.columns(4)
 
-    c1.metric("Revenue", "$394B", "+18%")
-    c2.metric("Net Income", "$98B", "+12%")
-    c3.metric("EPS", "$6.14", "+9%")
-    c4.metric("Operating Margin", "30%", "+2%")
+    with c1:
+        with st.container(border=True):
+            st.metric(
+                "Revenue",
+                "$394B",
+                "+18%"
+            )
 
+    with c2:
+        with st.container(border=True):
+            st.metric(
+                "Net Income",
+                "$98B",
+                "+12%"
+            )
+
+    with c3:
+        with st.container(border=True):
+            st.metric(
+                "EPS",
+                "$6.14",
+                "+9%"
+            )
+
+    with c4:
+        with st.container(border=True):
+            st.metric(
+                "Operating Margin",
+                "30%",
+                "+2%"
+            )
     st.write("")
 
     # =====================================================
@@ -148,10 +213,10 @@ def show_report_analyzer():
 
     tab1, tab2, tab3, tab4 = st.tabs(
         [
-            "📋 Summary",
-            "⚠ Risks",
-            "💡 Opportunities",
-            "🟢 Recommendation"
+            "Summary",
+            "Risks",
+            "Opportunities",
+            "Recommendation"
         ]
     )
 
@@ -234,25 +299,25 @@ def show_report_analyzer():
         b1, b2, b3 = st.columns(3)
 
         with b1:
-            st.button(
-                "📥 Download Summary",
-                key="report_download",
-                use_container_width=True
-            )
+         if st.button(
+          "Download Summary",
+          use_container_width=True
+        ):
+            st.success("Summary downloaded successfully!")
 
         with b2:
-            st.button(
-                "🤖 Ask AI",
-                key="report_ai",
-                use_container_width=True
-            )
+         if st.button(
+          "Ask AI",
+          use_container_width=True
+        ):
+            navigate("AI Chat")
 
         with b3:
-            st.button(
-                "📄 Upload Another",
-                key="report_upload",
-                use_container_width=True
-            )
+         if st.button(
+          "Upload Another",
+          use_container_width=True
+        ):
+            st.rerun()
 
     st.divider()
 

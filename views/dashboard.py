@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-
+from utils.navigation import navigate
 from data.companies import companies
 from data.charts import get_chart_data
 
@@ -58,8 +58,8 @@ def show_dashboard():
         if st.button(
             "Analyze",
              use_container_width=True,
-             key="dashboard_analyze"
         ):
+            navigate("Stock Analysis")
             st.success(f"Analyzing {company}...")
 
     company = st.session_state.get("company", "Apple")

@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 import time
 from data.companies import companies
+from utils.navigation import navigate
 def show_news_sentiment():
 
     # =====================================================
@@ -12,7 +13,7 @@ def show_news_sentiment():
     st.markdown("""
     <div class="page-header">
 
-    <h1>📰 AI News & Market Sentiment</h1>
+    <h1>AI News & Market Sentiment</h1>
 
     <p>
     Discover how AI interprets the latest financial news,
@@ -37,7 +38,7 @@ def show_news_sentiment():
 # SEARCH
 # =====================================================
 
-    st.markdown("##### 🔍 Search Company or Ticker")
+    st.markdown("##### Search Company or Ticker")
 
     col1, col2 = st.columns([6, 1], vertical_alignment="bottom")
 
@@ -53,7 +54,7 @@ def show_news_sentiment():
 
     with col2:
         analyze = st.button(
-            "🔍 Analyze",
+            "Analyze",
             key="news_analyze",
             use_container_width=True
         )
@@ -95,7 +96,7 @@ def show_news_sentiment():
 
     st.write("")
     st.info(
-    "🤖 AI Confidence: **91%** • Based on 128 recent financial articles from trusted sources."
+    "AI Confidence: **91%** • Based on 128 recent financial articles from trusted sources."
 )
     # =====================================================
     # NEWS + CHART
@@ -107,7 +108,7 @@ def show_news_sentiment():
 
     with st.container(border=True):
 
-        st.subheader("📰 Latest Financial News")
+        st.subheader("Latest Financial News")
 
     # News Cards Here
     # =====================================================
@@ -116,7 +117,7 @@ def show_news_sentiment():
 
     with st.container(border=True):
 
-        st.subheader("📈 Sentiment Trend")
+        st.subheader("Sentiment Trend")
 
     # Plotly Chart Here
         st.write("")
@@ -196,29 +197,25 @@ def show_news_sentiment():
         b1, b2, b3 = st.columns(3)
 
         with b1:
-         st.button(
-            "📈 Open Stock Analysis",
-            key="view_stock",
-            use_container_width=True
-        )
+         if st.button(
+          "View Stock",
+          use_container_width=True
+        ):
+            navigate("Stock Analysis")
 
         with b2:
-         st.button(
-            "💬 Chat with AI",
-            key="news_ai",
-            use_container_width=True
-        )
+         if st.button(
+          "Ask AI",
+          use_container_width=True
+        ):
+            navigate("AI Chat")
 
         with b3:
          if st.button(
-            "📄 Export Summary",
-            use_container_width=True
+          "Generate Report",
+          use_container_width=True
         ):
-            with st.spinner("Generating report..."):
-                time.sleep(2)
-
-            st.success("Summary exported successfully!")
-
+            navigate("Report Analyzer")
     st.divider()
 
     left, right = st.columns([3, 1])

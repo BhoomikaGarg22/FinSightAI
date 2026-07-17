@@ -31,25 +31,29 @@ from views.settings import show_settings
 # -----------------------------------
 # Sidebar
 # -----------------------------------
-selected = show_sidebar()
+# -----------------------------------
+# Sidebar
+# -----------------------------------
+
+show_sidebar()
 
 # -----------------------------------
 # Routing
 # -----------------------------------
-if selected == "Dashboard":
+if st.session_state.page == "Dashboard":
     show_dashboard()
 
-elif selected == "Stock Analysis":
+elif st.session_state.page == "Stock Analysis":
     show_stock_analysis_v2()
 
-elif selected == "Report Analyzer":
+elif st.session_state.page == "Report Analyzer":
     show_report_analyzer()
 
-elif selected == "News & Sentiment":
+elif st.session_state.page == "News & Sentiment":
     show_news_sentiment()
 
-elif selected == "AI Chat":
+elif st.session_state.page == "AI Chat":
     show_ai_chat()
 
-elif selected == "Settings":
+elif st.session_state.page == "Settings":
     show_settings()

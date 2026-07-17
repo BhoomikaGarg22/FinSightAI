@@ -695,3 +695,11 @@ button[kind="elementToolbar"]{
 section[data-testid="stSidebar"] .block-container{
     padding-top:0.6rem !important;
 }
+
+div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+
+}
