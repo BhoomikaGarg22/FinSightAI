@@ -109,7 +109,17 @@ def show_news_sentiment():
     with st.container(border=True):
 
         st.subheader("Latest Financial News")
+        news = [
+          ("Apple unveils next-generation AI-powered Siri features.", "CNBC • 2 hours ago"),
+          ("NVIDIA becomes one of the world's most valuable companies.", "Bloomberg • 5 hours ago"),
+          ("Tesla expands autonomous vehicle rollout in Europe.", "Reuters • Today"),
+          ("Microsoft strengthens enterprise AI partnerships.", "Financial Times • Today"),
+        ]
 
+        for headline, source in news:
+          st.markdown(f"**{headline}**")
+          st.caption(source)
+          st.divider()
     # News Cards Here
     # =====================================================
 # SENTIMENT TREND
@@ -118,6 +128,28 @@ def show_news_sentiment():
     with st.container(border=True):
 
         st.subheader("Sentiment Trend")
+
+        df = pd.DataFrame({
+            "Day": ["Mon", "Tue", "Wed", "Thu", "Fri"],
+            "Score": [70, 75, 81, 87, 91]
+        })
+
+        fig = px.line(
+            df,
+            x="Day",
+            y="Score",
+            markers=True
+        )
+
+        fig.update_layout(
+            height=350,
+            margin=dict(l=10, r=10, t=20, b=10)
+        )
+
+        st.plotly_chart(
+            fig,
+            use_container_width=True
+        )
 
     # Plotly Chart Here
         st.write("")
