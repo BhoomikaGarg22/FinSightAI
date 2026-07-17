@@ -1,10 +1,25 @@
+import base64
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+
 from utils.navigation import navigate
 from data.companies import companies
 from data.charts import get_chart_data
+
+
+def get_base64_image(image_path):
+    with open(image_path, "rb") as img:
+        return base64.b64encode(img.read()).decode()
+
+
+COMPANY_LOGO_MAP = {
+    "Apple": "assets/images/apple_logo.png",
+    "Tesla": "assets/images/Tesla_Logo.png",
+    "NVIDIA": "assets/images/Nvidia_Logo.png",
+    "Microsoft": "assets/images/Microsoft_Logo.png",
+}
 
 
 def show_dashboard():
@@ -17,10 +32,20 @@ def show_dashboard():
 
     with left:
 
+        logo_b64 = get_base64_image("assets/images/icon_logo.png")
+
+        st.markdown(
+            f"""
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom: 0.25rem;">
+                <img src="data:image/png;base64,{logo_b64}" style="width:72px; height:auto; object-fit:contain;">
+                <h1 style="margin: 0;">Welcome to FinSight AI</h1>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
         st.markdown(
             """
-            # Welcome to FinSight AI
-
             ### AI-powered Financial Research Platform
 
             Analyze stocks, discover market sentiment, generate AI insights,
@@ -30,9 +55,47 @@ def show_dashboard():
 
     with right:
 
-        st.metric(
-            "Market Status",
-            "OPEN"
+        st.markdown(
+            "<div style='margin-top: 2.5rem;'></div>",
+            unsafe_allow_html=True,
+        )
+
+        st.markdown(
+            """
+            <style>
+            .market-status-card {
+                background: linear-gradient(135deg, #16a34a, #22c55e);
+                color: white;
+                border-radius: 14px;
+                padding: 14px 16px;
+                text-align: center;
+                box-shadow: 0 8px 24px rgba(22, 163, 74, 0.28);
+                animation: pulseGreen 1.6s infinite;
+                margin-top: 6px;
+            }
+            .market-status-title {
+                font-size: 13px;
+                font-weight: 600;
+                letter-spacing: 0.3px;
+                opacity: 0.9;
+            }
+            .market-status-value {
+                font-size: 24px;
+                font-weight: 800;
+                margin-top: 6px;
+            }
+            @keyframes pulseGreen {
+                0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55); }
+                70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0.0); }
+                100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.0); }
+            }
+            </style>
+            <div class="market-status-card">
+                <div class="market-status-title">Market Status</div>
+                <div class="market-status-value">OPEN</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
 
     st.write("")
@@ -300,15 +363,21 @@ def show_dashboard():
 
             for name, price, change in stocks:
 
+             logo_path = COMPANY_LOGO_MAP.get(name, "assets/images/icon_logo.png")
+             logo_b64 = get_base64_image(logo_path)
+
              st.markdown(
               f"""
             <div class="stock-card">
 
-            <div class="stock-left">
+            <div class="stock-left" style="display:flex; align-items:center; gap:12px;">
 
-            <div class="stock-name">{name}</div>
+            <img src="data:image/png;base64,{logo_b64}" style="width:34px; height:34px; object-fit:contain; border-radius:8px;">
 
-            <div class="stock-price">{price}</div>
+            <div>
+                <div class="stock-name">{name}</div>
+                <div class="stock-price">{price}</div>
+            </div>
 
             </div>
 

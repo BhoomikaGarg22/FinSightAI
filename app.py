@@ -6,7 +6,7 @@ import streamlit as st
 # -----------------------------------
 st.set_page_config(
     page_title="FinSight AI",
-    page_icon="📈",
+    page_icon="assets/images/icon_logo.png",
     layout="wide"
 )
 

@@ -1,12 +1,26 @@
+import base64
 import streamlit as st
 import time
 import plotly.express as px
-from utils.navigation import navigate
+
 from components.ui_components import (
     section_title,
     metric_card,
     recommendation_card,
 )
+
+
+def get_base64_image(image_path):
+    with open(image_path, "rb") as img:
+        return base64.b64encode(img.read()).decode()
+
+
+COMPANY_LOGO_MAP = {
+    "Apple": "assets/images/apple_logo.png",
+    "Tesla": "assets/images/Tesla_Logo.png",
+    "NVIDIA": "assets/images/Nvidia_Logo.png",
+    "Microsoft": "assets/images/Microsoft_Logo.png",
+}
 
 from utils.helpers import (
     get_selected_company,
@@ -91,6 +105,18 @@ def show_stock_analysis_v2():
     with left:
 
       with st.container(border=True):
+
+        logo_path = COMPANY_LOGO_MAP.get(company, "assets/images/icon_logo.png")
+        logo_b64 = get_base64_image(logo_path)
+
+        st.markdown(
+            f"""
+            <div style="margin-bottom: 8px;">
+                <img src="data:image/png;base64,{logo_b64}" style="width:90px; height:auto; object-fit:contain;">
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
         st.markdown(f"### {company}")
 
@@ -203,35 +229,35 @@ def show_stock_analysis_v2():
     c1, c2, c3 = st.columns(3)
 
     with c1:
-     metric_card(
-        "RSI",
-        company_data["rsi"]
-    )
+        metric_card(
+            "RSI",
+            company_data["rsi"]
+        )
 
     with c2:
-     metric_card(
-        "Moving Average",
-        company_data["moving_average"]
-    )
+        metric_card(
+            "Moving Average",
+            company_data["moving_average"]
+        )
 
     with c3:
-     metric_card(
-        "MACD",
-        company_data["macd"]
-    )
-     
-     st.divider()
+        metric_card(
+            "MACD",
+            company_data["macd"]
+        )
+
+    st.divider()
 
     section_title("AI Recommendation")
 
     recommendation_card(
-     company_data["recommendation"],
-     company_data["confidence"]
-)
-            
+        company_data["recommendation"],
+        company_data["confidence"]
+    )
+
     st.divider()
 
-    section_title("Key Financial Ratios")
+    section_title("📊 Key Financial Ratios")
 
     st.caption(
         "Important financial metrics for evaluating company performance."
@@ -283,7 +309,7 @@ def show_stock_analysis_v2():
 
             st.write("")
 
-    section_title("AI Executive Summary")
+    section_title("📝 AI Executive Summary")
 
     st.caption(
         "Quick AI-generated overview of the company's current outlook."
@@ -313,38 +339,3 @@ def show_stock_analysis_v2():
     **Overall Rating:** **{company_data['recommendation']}**
     """
         )
-
-    st.write("")
-
-# =====================================================
-# QUICK ACTIONS
-# =====================================================
-
-    section_title("Quick Actions")
-
-    b1, b2, b3 = st.columns(3)
-
-    with b1:
-        if st.button(
-            "View News",
-            use_container_width=True
-        ):
-            navigate("News & Sentiment")
-
-    with b2:
-        if st.button(
-            "Ask AI",
-            use_container_width=True
-        ):
-            navigate("AI Chat")
-
-    with b3:
-        if st.button(
-            "Generate Report",
-            use_container_width=True
-        ):
-            navigate("Report Analyzer")
-
-    st.divider()
-
-    st.caption("© 2026 FinSight AI | AI-Powered Financial Research Platform")    
