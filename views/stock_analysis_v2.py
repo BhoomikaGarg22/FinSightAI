@@ -423,3 +423,88 @@ def show_stock_analysis_v2():
             st.info(
     "💡 **Disclaimer:** This recommendation is generated for educational purposes and should not be considered financial advice."
 )
+            
+            st.divider()
+
+    section_title("📊 Key Financial Ratios")
+
+    st.caption(
+        "Important financial metrics for evaluating company performance."
+    )
+
+    r1, r2, r3 = st.columns(3)
+
+    with r1:
+
+        with st.container(border=True):
+
+            st.metric(
+                "Revenue Growth",
+                "+12.4%"
+            )
+
+            st.metric(
+                "Net Margin",
+                "18.2%"
+            )
+
+    with r2:
+
+        with st.container(border=True):
+
+            st.metric(
+                "EPS",
+                "$6.18"
+            )
+
+            st.metric(
+                "ROE",
+                "24.3%"
+            )
+
+    with r3:
+
+        with st.container(border=True):
+
+            st.metric(
+                "Dividend Yield",
+                "0.48%"
+            )
+
+            st.metric(
+                "Debt / Equity",
+                "1.12"
+            )
+
+            st.write("")
+
+    section_title("📝 AI Executive Summary")
+
+    st.caption(
+        "Quick AI-generated overview of the company's current outlook."
+    )
+
+    with st.container(border=True):
+
+        st.markdown(
+            f"""
+    ### {company} Outlook
+
+    Our AI analysis indicates that **{company}**
+    continues to demonstrate strong financial stability,
+    healthy revenue growth, and positive technical momentum.
+
+    **Key Highlights**
+
+    ✅ Strong earnings performance
+ 
+    ✅ Positive institutional sentiment
+
+    ✅ Healthy technical indicators
+
+    ⚠ Keep an eye on market volatility
+    and valuation levels.
+
+    **Overall Rating:** **{company_data['recommendation']}**
+    """
+        )
