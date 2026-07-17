@@ -7,8 +7,28 @@ def show_report_analyzer():
     # HEADER
     # =====================================================
 
-    st.title("📄 AI Financial Report Analyzer")
-    st.caption("Upload an annual report and let AI extract financial insights in seconds.")
+    st.markdown("""
+    <div class="page-header">
+
+    <h1>📄 AI Financial Report Analyzer</h1>
+
+    <p>
+    Upload annual reports, quarterly filings, and financial statements.
+    Our AI extracts insights, identifies risks, and summarizes key financial metrics within seconds.
+    </p>
+
+    <div class="market-status">
+
+    🤖 <b>AI Ready</b>
+
+    <span class="status-dot"></span>
+
+    Supports PDF Reports
+
+    </div>
+
+    </div>
+    """, unsafe_allow_html=True)
 
     # =====================================================
     # UPLOAD + FEATURES
@@ -20,7 +40,13 @@ def show_report_analyzer():
 
         with st.container(border=True):
 
-            st.subheader("📤 Upload Financial Report")
+            st.markdown("## 📤 Upload Financial Report")
+
+            st.caption(
+             "Supported formats: Annual Reports • 10-K • Quarterly Reports • Earnings Reports"
+            )
+
+            st.write("")
 
             uploaded_file = st.file_uploader(
                 "Choose PDF",
@@ -34,13 +60,23 @@ def show_report_analyzer():
 
             if uploaded_file:
 
-                st.success("✅ File Uploaded Successfully")
+                st.success("✅ Report uploaded successfully and ready for AI analysis.")
 
-                st.write(f"**File:** {uploaded_file.name}")
-                st.write(f"**Size:** {round(uploaded_file.size/1024,2)} KB")
+                c1, c2 = st.columns(2)
 
+                with c1:
+                 st.metric(
+                 "📄 File",
+                 uploaded_file.name
+             )
+
+                with c2:
+                 st.metric(
+                 "📦 Size",
+                 f"{round(uploaded_file.size/1024,2)} KB"
+            )
                 st.button(
-                    "🚀 Analyze Report",
+                    "🤖 Analyze with AI",
                     key="analyze_report",
                     use_container_width=True
                 )

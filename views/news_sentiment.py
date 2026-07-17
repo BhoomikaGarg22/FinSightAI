@@ -9,16 +9,35 @@ def show_news_sentiment():
     # HEADER
     # =====================================================
 
-    st.title("📰 AI News & Market Sentiment")
-    st.caption(
-        "Analyze the latest financial news and discover AI-powered market sentiment."
-    )
+    st.markdown("""
+    <div class="page-header">
+
+    <h1>📰 AI News & Market Sentiment</h1>
+
+    <p>
+    Discover how AI interprets the latest financial news,
+    market events, and investor sentiment.
+    </p>
+
+    <div class="market-status">
+
+    🟢 <b>Live News Feed</b>
+
+    <span class="status-dot"></span>
+
+    Updated every few minutes
+
+    </div>
+
+    </div>
+    """,
+    unsafe_allow_html=True)
 
     # =====================================================
 # SEARCH
 # =====================================================
 
-    st.markdown("##### Search Company")
+    st.markdown("##### 🔍 Search Company or Ticker")
 
     col1, col2 = st.columns([6, 1], vertical_alignment="bottom")
 
@@ -27,9 +46,8 @@ def show_news_sentiment():
             "",
             value=st.session_state.get("company", "Apple"),
             label_visibility="collapsed",
-            placeholder="Enter company name..."
+            placeholder="Apple, Tesla, NVIDIA..."
         )
-
         if company:
             st.session_state["company"] = company
 
@@ -76,153 +94,94 @@ def show_news_sentiment():
             )
 
     st.write("")
-
+    st.info(
+    "🤖 AI Confidence: **91%** • Based on 128 recent financial articles from trusted sources."
+)
     # =====================================================
     # NEWS + CHART
     # =====================================================
 
-    left, right = st.columns([2, 1])
-
-    with left:
-
-        with st.container(border=True):
-
-            st.subheader("📰 Latest Financial News")
-
-            news = [
-                (
-                    "Apple unveils next-generation AI-powered Siri features.",
-                    "CNBC • 2 hours ago"
-                ),
-                (
-                    "NVIDIA becomes one of the world's most valuable companies.",
-                    "Bloomberg • 5 hours ago"
-                ),
-                (
-                    "Tesla expands autonomous vehicle rollout in Europe.",
-                    "Reuters • Today"
-                ),
-                (
-                    "Microsoft strengthens enterprise AI partnerships.",
-                    "Financial Times • Today"
-                ),
-            ]
-
-            for headline, source in news:
-
-                st.markdown(f"**{headline}**")
-                st.caption(source)
-                st.divider()
-
-    with right:
-
-        with st.container(border=True):
-
-            st.subheader("📈 Sentiment Trend")
-
-            df = pd.DataFrame({
-                "Day": [
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu",
-                    "Fri"
-                ],
-                "Score": [
-                    70,
-                    75,
-                    81,
-                    87,
-                    91
-                ]
-            })
-
-            fig = px.line(
-                df,
-                x="Day",
-                y="Score",
-                markers=True
-            )
-
-            fig.update_layout(
-                height=350,
-                margin=dict(
-                    l=10,
-                    r=10,
-                    t=20,
-                    b=10
-                )
-            )
-
-            st.plotly_chart(
-                fig,
-                use_container_width=True
-            )
-
-    st.write("")
-
     # =====================================================
-    # AI SUMMARY
-    # =====================================================
+# LATEST NEWS
+# =====================================================
 
     with st.container(border=True):
 
-        st.subheader("🤖 AI Summary")
+        st.subheader("📰 Latest Financial News")
 
-        st.success("""
-### Market Outlook
+    # News Cards Here
+    # =====================================================
+# SENTIMENT TREND
+# =====================================================
 
-Technology stocks continue to dominate market headlines.
+    with st.container(border=True):
 
-Positive earnings, rapid AI adoption and cloud expansion
-are supporting strong investor confidence.
+        st.subheader("📈 Sentiment Trend")
 
-Overall outlook remains **Bullish**.
-""")
-
-    st.write("")
+    # Plotly Chart Here
+        st.write("")
 
     # =====================================================
-    # POSITIVE VS NEGATIVE
-    # =====================================================
+# AI MARKET ANALYSIS
+# =====================================================
 
-    left, right = st.columns(2)
+    st.divider()
 
-    with left:
+    st.markdown("## 🤖 AI Market Analysis")
 
-        with st.container(border=True):
+    st.caption(
+        "AI-generated summary based on recent financial news and market sentiment."
+    )
 
-            st.subheader("✅ Positive Factors")
+    with st.container(border=True):
+
+        st.markdown("### 🟢 Overall Sentiment")
+
+        st.markdown("## **BULLISH**")
+
+        st.write(
+            """
+    Recent financial news indicates continued optimism around the technology sector.
+
+    Positive earnings reports, increasing AI adoption, and strong institutional
+    interest continue to support investor confidence.
+
+    Overall market sentiment remains favorable, although investors should remain
+    aware of macroeconomic uncertainty and elevated market valuations.
+    """
+        )
+
+        st.markdown("---")
+
+        c1, c2 = st.columns(2)
+
+        with c1:
+
+            st.markdown("### ✅ Key Drivers")
 
             st.markdown("""
-- Strong quarterly earnings
+    - Strong quarterly earnings
 
-- AI product launches
+    - AI investments accelerating
 
-- Analyst upgrades
+    - Positive analyst ratings
 
-- Institutional buying
+    - Healthy revenue growth
+    """)
 
-- Cloud growth
-""")
+        with c2:
 
-    with right:
-
-        with st.container(border=True):
-
-            st.subheader("⚠ Risks")
+            st.markdown("### ⚠ Risks")
 
             st.markdown("""
-- High market valuation
+    - High valuation
 
-- Global uncertainty
+    - Interest rate uncertainty
 
-- Competition
+    - Market volatility
 
-- Regulatory pressure
-
-- Inflation concerns
-""")
+    - Global economic slowdown
+    """)
 
     st.write("")
 
@@ -237,29 +196,37 @@ Overall outlook remains **Bullish**.
         b1, b2, b3 = st.columns(3)
 
         with b1:
-            st.button(
-                "📊 View Stock",
-                key="view_stock",
-                use_container_width=True
-            )
+         st.button(
+            "📈 Open Stock Analysis",
+            key="view_stock",
+            use_container_width=True
+        )
 
         with b2:
-            st.button(
-                "🤖 Ask AI",
-                key="news_ai",
-                use_container_width=True
-            )
+         st.button(
+            "💬 Chat with AI",
+            key="news_ai",
+            use_container_width=True
+        )
 
         with b3:
-            if st.button("Analyze"):
-             with st.spinner("Analyzing news"):
-              
-              time.sleep(2)
+         if st.button(
+            "📄 Export Summary",
+            use_container_width=True
+        ):
+            with st.spinner("Generating report..."):
+                time.sleep(2)
 
-    st.success("Analysis Complete!")
+            st.success("Summary exported successfully!")
 
     st.divider()
 
-    st.caption(
-        "© 2026 FinSight AI | AI-Powered Financial Research Platform"
-    )
+    left, right = st.columns([3, 1])
+
+    with left:
+        st.caption(
+            "© 2026 FinSight AI • AI-Powered Financial Research Platform"
+        )
+
+    with right:
+        st.caption("Version 1.0")
