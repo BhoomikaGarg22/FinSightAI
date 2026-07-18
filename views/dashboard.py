@@ -69,7 +69,7 @@ def show_dashboard():
                 border-radius: 14px;
                 padding: 14px 16px;
                 text-align: center;
-                box-shadow: 0 8px 24px rgba(22, 163, 74, 0.28);
+                box-shadow: 0 8px 24px rgba(22, 162, 74, 0.28);
                 animation: pulseGreen 1.6s infinite;
                 margin-top: 6px;
             }
