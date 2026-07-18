@@ -202,7 +202,10 @@ def show_ai_chat():
           "Analyze Stock",
           use_container_width=True
         ):
-            navigate("Stock Analysis")
+            navigate(
+             "Stock Analysis",
+              company=company
+            )
 
         with b2:
          if st.button(

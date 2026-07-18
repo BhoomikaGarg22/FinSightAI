@@ -1,6 +1,6 @@
 from views.stock_analysis_v2 import show_stock_analysis_v2
 import streamlit as st
-
+from views.watchlist import show_watchlist
 # -----------------------------------
 # Page Config
 # -----------------------------------
@@ -37,23 +37,27 @@ from views.settings import show_settings
 
 show_sidebar()
 
+current_page = st.session_state.current_page
 # -----------------------------------
 # Routing
 # -----------------------------------
-if st.session_state.page == "Dashboard":
+if current_page == "Dashboard":
     show_dashboard()
 
-elif st.session_state.page == "Stock Analysis":
+elif current_page == "Stock Analysis":
     show_stock_analysis_v2()
 
-elif st.session_state.page == "Report Analyzer":
+elif current_page == "Watchlist":
+    show_watchlist()
+
+elif current_page == "Report Analyzer":
     show_report_analyzer()
 
-elif st.session_state.page == "News & Sentiment":
+elif current_page == "News & Sentiment":
     show_news_sentiment()
 
-elif st.session_state.page == "AI Chat":
+elif current_page == "AI Chat":
     show_ai_chat()
 
-elif st.session_state.page == "Settings":
+elif current_page == "Settings":
     show_settings()

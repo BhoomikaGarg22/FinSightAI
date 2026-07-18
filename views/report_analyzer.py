@@ -37,7 +37,7 @@ def show_report_analyzer():
 
             if uploaded_file is not None:
 
-                st.success("✅ File Uploaded Successfully")
+                st.success("File Uploaded Successfully")
 
                 st.write(f"**File:** {uploaded_file.name}")
                 st.write(f"**Size:** {round(uploaded_file.size/1024,2)} KB")
@@ -46,15 +46,15 @@ def show_report_analyzer():
                     st.image(uploaded_file, caption=uploaded_file.name, use_column_width=True)
 
                 if st.button(
-                    "🚀 Analyze Report",
+                    "Analyze Report",
                     key="analyze_report",
                     use_container_width=True
                 ):
                     st.session_state.report_analyzed = True
-                    st.success("✅ Report analysis started successfully")
+                    st.success("Report analysis started successfully")
 
                 if st.session_state.report_analyzed:
-                    st.info("📄 Analysis results are now available for the uploaded PDF.")
+                    st.info("Analysis results are now available for the uploaded PDF.")
 
             else:
 
@@ -66,24 +66,24 @@ def show_report_analyzer():
 
         with st.container(border=True):
 
-            st.subheader("🤖 AI Features")
+            st.subheader("AI Features")
 
             st.markdown("""
-✅ Executive Summary
+Executive Summary
 
-✅ Financial Highlights
+Financial Highlights
 
-✅ Risk Timeline
+Risk Timeline
 
-✅ Growth Opportunities
+Growth Opportunities
 
-✅ ESG Insights
+ESG Insights
 
-✅ Contradiction Detection
+Contradiction Detection
 
-✅ Financial Ratios
+Financial Ratios
 
-✅ Investment Recommendation
+Investment Recommendation
 """)
 
     st.write("")
@@ -96,7 +96,7 @@ def show_report_analyzer():
 
         with st.container(border=True):
 
-            st.subheader("⚙️ Processing Status")
+            st.subheader("Processing Status")
 
             st.progress(100)
 
@@ -108,7 +108,7 @@ def show_report_analyzer():
         # FINANCIAL METRICS
         # =====================================================
 
-        st.subheader("📊 Financial Highlights")
+        st.subheader("Financial Highlights")
 
         c1, c2, c3, c4 = st.columns(4)
 
@@ -125,10 +125,10 @@ def show_report_analyzer():
 
         tab1, tab2, tab3, tab4 = st.tabs(
             [
-                "📋 Summary",
-                "⚠ Risks",
-                "💡 Opportunities",
-                "🟢 Recommendation"
+                "Summary",
+                "Risks",
+                "Opportunities",
+                "Recommendation"
             ]
         )
 
@@ -183,19 +183,19 @@ def show_report_analyzer():
         with tab4:
 
             st.success("""
-## 🟢 BUY
+## BUY
 
 **Confidence Score: 92%**
 
 ### Why?
 
-✅ Strong balance sheet
+Strong balance sheet
 
-✅ Healthy cash flow
+Healthy cash flow
 
-✅ Positive earnings trend
+Positive earnings trend
 
-✅ Attractive long-term outlook
+Attractive long-term outlook
 """)
 
         st.write("")
@@ -206,27 +206,27 @@ def show_report_analyzer():
 
     with st.container(border=True):
 
-        st.subheader("⚡ Quick Actions")
+        st.subheader("Quick Actions")
 
         b1, b2, b3 = st.columns(3)
 
         with b1:
             st.button(
-                "📥 Download Summary",
+                "Download Summary",
                 key="report_download",
                 use_container_width=True
             )
 
         with b2:
             st.button(
-                "🤖 Ask AI",
+                "Ask AI",
                 key="report_ai",
                 use_container_width=True
             )
 
         with b3:
             st.button(
-                "📄 Upload Another",
+                "Upload Another",
                 key="report_upload",
                 use_container_width=True
             )

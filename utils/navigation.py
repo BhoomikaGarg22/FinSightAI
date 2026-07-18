@@ -1,9 +1,14 @@
 import streamlit as st
 
-def navigate(page, company=None):
-    st.session_state.page = page
+def navigate(page, **kwargs):
+    """
+    Navigate to another page and optionally
+    store extra values in session_state.
+    """
 
-    if company:
-        st.session_state.company = company
+    st.session_state.current_page = page
+
+    for key, value in kwargs.items():
+        st.session_state[key] = value
 
     st.rerun()

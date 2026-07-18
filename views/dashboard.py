@@ -491,7 +491,7 @@ def show_dashboard():
 
     </ul>
 
-    <h4>⚠ Risk Factors</h4>
+    <h4>Risk Factors</h4>
 
     <ul>
 

@@ -257,7 +257,7 @@ def show_stock_analysis_v2():
 
     st.divider()
 
-    section_title("📊 Key Financial Ratios")
+    section_title("Key Financial Ratios")
 
     st.caption(
         "Important financial metrics for evaluating company performance."
@@ -309,7 +309,7 @@ def show_stock_analysis_v2():
 
             st.write("")
 
-    section_title("📝 AI Executive Summary")
+    section_title("AI Executive Summary")
 
     st.caption(
         "Quick AI-generated overview of the company's current outlook."
@@ -327,13 +327,13 @@ def show_stock_analysis_v2():
 
     **Key Highlights**
 
-    ✅ Strong earnings performance
+    Strong earnings performance
  
-    ✅ Positive institutional sentiment
+    Positive institutional sentiment
 
-    ✅ Healthy technical indicators
+    Healthy technical indicators
 
-    ⚠ Keep an eye on market volatility
+    Keep an eye on market volatility
     and valuation levels.
 
     **Overall Rating:** **{company_data['recommendation']}**

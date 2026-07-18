@@ -9,7 +9,7 @@ def show_news_sentiment():
     # HEADER
     # =====================================================
 
-    st.title("📰 AI News & Market Sentiment")
+    st.title("AI News & Market Sentiment")
     st.caption(
         "Analyze the latest financial news and discover AI-powered market sentiment."
     )
@@ -36,7 +36,7 @@ def show_news_sentiment():
             with st.spinner("Analyzing news..."):
                 time.sleep(2)
 
-            st.success("✅ News analysis complete!")
+            st.success("News analysis complete!")
         else:
             st.warning("Please select a company first.")
 
@@ -52,7 +52,7 @@ def show_news_sentiment():
         with st.container(border=True):
             st.metric(
                 "Overall Sentiment",
-                "🟢 Bullish"
+                "Bullish"
             )
 
     with c2:
@@ -81,7 +81,7 @@ def show_news_sentiment():
 
         with st.container(border=True):
 
-            st.subheader("📰 Latest Financial News")
+            st.subheader("Latest Financial News")
 
             news = [
                 (
@@ -112,7 +112,7 @@ def show_news_sentiment():
 
         with st.container(border=True):
 
-            st.subheader("📈 Sentiment Trend")
+            st.subheader("Sentiment Trend")
 
             df = pd.DataFrame({
                 "Day": [
@@ -161,7 +161,7 @@ def show_news_sentiment():
 
     with st.container(border=True):
 
-        st.subheader("🤖 AI Summary")
+        st.subheader("AI Summary")
 
         st.success("""
 ### Market Outlook
@@ -186,7 +186,7 @@ Overall outlook remains **Bullish**.
 
         with st.container(border=True):
 
-            st.subheader("✅ Positive Factors")
+            st.subheader("Positive Factors")
 
             st.markdown("""
 - Strong quarterly earnings
@@ -204,7 +204,7 @@ Overall outlook remains **Bullish**.
 
         with st.container(border=True):
 
-            st.subheader("⚠ Risks")
+            st.subheader("Risks")
 
             st.markdown("""
 - High market valuation

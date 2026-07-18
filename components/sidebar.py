@@ -11,60 +11,53 @@ def show_sidebar():
 
     with st.sidebar:
 
-        # =====================================
-        # Logo
-        # =====================================
-
         logo = get_base64_image("assets/images/Whitebg_logo.png")
 
         st.markdown(
-    f"""
-    <div style="
-        display:flex;
-        justify-content:center;
-        margin-top:-8px;
-        margin-bottom:2px;
-    ">
-        <img
-            src="data:image/png;base64,{logo}"
-            style="
-                width:250px;
-                height:auto;
-            "
-        >
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
+            f"""
+            <div style="
+                display:flex;
+                justify-content:center;
+                margin-top:-8px;
+                margin-bottom:2px;
+            ">
+                <img
+                    src="data:image/png;base64,{logo}"
+                    style="width:250px;height:auto;">
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
         st.markdown(
-    "<hr style='margin:12px 0 10px 0;'>",
-    unsafe_allow_html=True
-)
-        # =====================================
-        # Navigation
-        # =====================================
+            "<hr style='margin:12px 0 10px 0;'>",
+            unsafe_allow_html=True,
+        )
 
         pages = [
             "Dashboard",
             "Stock Analysis",
+            "Watchlist",
             "Report Analyzer",
             "News & Sentiment",
             "AI Chat",
             "Settings",
         ]
 
-        # Initialize page
-        if "page" not in st.session_state:
-         st.session_state.page = "Dashboard"
+        if "current_page" not in st.session_state:
+            st.session_state.current_page = "Dashboard"
 
-        page = st.radio(
-         "",
-         pages,
-         index=pages.index(st.session_state.page),
-         label_visibility="collapsed",
+        selected = st.radio(
+            "",
+            pages,
+            index=pages.index(st.session_state.current_page),
+            label_visibility="collapsed",
         )
 
-        # Keep session_state in sync
-        st.session_state.page = page
 
-    return page
+    # User clicked sidebar
+        if selected != st.session_state.current_page:
+            st.session_state.current_page = selected
+            st.rerun()
+
+        return st.session_state.current_page
