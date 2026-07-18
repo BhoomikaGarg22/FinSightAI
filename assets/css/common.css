@@ -59,8 +59,10 @@ h6 {
 
 p,
 label,
-span {
-    color: #6B7280;
+span,
+div[data-testid="stMarkdownContainer"] p,
+div[data-testid="stCaptionContainer"] p {
+    color: #111827;
 }
 
 /* ===========================================

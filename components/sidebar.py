@@ -67,11 +67,4 @@ def show_sidebar():
         # Keep session_state in sync
         st.session_state.page = page
 
-    return (
-        page.replace("🏠 ", "")
-            .replace("📈 ", "")
-            .replace("📄 ", "")
-            .replace("📰 ", "")
-            .replace("🤖 ", "")
-            .replace("⚙️ ", "")
-    )
+    return page

@@ -142,7 +142,7 @@ def show_settings():
 
     with st.container(border=True):
 
-        st.subheader("⚡ Actions")
+        st.subheader("Actions")
 
         b1, b2, b3 = st.columns(3)
 

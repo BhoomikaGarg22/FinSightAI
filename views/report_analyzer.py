@@ -1,38 +1,17 @@
 import streamlit as st
-from utils.navigation import navigate
+
 
 def show_report_analyzer():
-    st.image(
-        "assets/images/upload_document.png",
-        use_container_width=True
-    )
-    
+
+    if "report_analyzed" not in st.session_state:
+        st.session_state.report_analyzed = False
+
     # =====================================================
     # HEADER
     # =====================================================
 
-    st.markdown("""
-    <div class="page-header">
-
-    <h1>📄 AI Financial Report Analyzer</h1>
-
-    <p>
-    Upload annual reports, quarterly filings, and financial statements.
-    Our AI extracts insights, identifies risks, and summarizes key financial metrics within seconds.
-    </p>
-
-    <div class="market-status">
-
-    🤖 <b>AI Ready</b>
-
-    <span class="status-dot"></span>
-
-    Supports PDF Reports
-
-    </div>
-
-    </div>
-    """, unsafe_allow_html=True)
+    st.title("AI Financial Report Analyzer")
+    st.caption("Upload an annual report and let AI extract financial insights in seconds.")
 
     # =====================================================
     # UPLOAD + FEATURES
@@ -44,13 +23,7 @@ def show_report_analyzer():
 
         with st.container(border=True):
 
-            st.markdown("## Upload Financial Report")
-
-            st.caption(
-             "Supported formats: Annual Reports • 10-K • Quarterly Reports • Earnings Reports"
-            )
-
-            st.write("")
+            st.subheader("Upload Financial Report")
 
             uploaded_file = st.file_uploader(
                 "Choose PDF",
@@ -62,49 +35,38 @@ def show_report_analyzer():
                 "Supported files: Annual Reports • 10-K • Earnings Reports"
             )
 
-            if uploaded_file:
+            if uploaded_file is not None:
 
-                st.success("✅ Report uploaded successfully and ready for AI analysis.")
+                st.success("✅ File Uploaded Successfully")
 
-                c1, c2 = st.columns(2)
+                st.write(f"**File:** {uploaded_file.name}")
+                st.write(f"**Size:** {round(uploaded_file.size/1024,2)} KB")
 
-                with c1:
-                 st.metric(
-                 "File",
-                 uploaded_file.name
-             )
+                if uploaded_file.type and uploaded_file.type.startswith("image/"):
+                    st.image(uploaded_file, caption=uploaded_file.name, use_column_width=True)
 
-                with c2:
-                 st.metric(
-                 "Size",
-                 f"{round(uploaded_file.size/1024,2)} KB"
-            )
-                st.button(
-                    "Analyze with AI",
+                if st.button(
+                    "🚀 Analyze Report",
                     key="analyze_report",
                     use_container_width=True
-                )
+                ):
+                    st.session_state.report_analyzed = True
+                    st.success("✅ Report analysis started successfully")
+
+                if st.session_state.report_analyzed:
+                    st.info("📄 Analysis results are now available for the uploaded PDF.")
 
             else:
 
-             st.image(
-              upload_image,
-              width=220
-             )
-
-             st.info(
-              "Upload a financial report to begin AI analysis."
-             )
+                st.info(
+                    "Upload a financial report to begin AI analysis."
+                )
 
     with right:
-        st.image(
-            "assets/images/upload_document.jpg",
-            use_container_width=True
-        )
 
         with st.container(border=True):
 
-            st.subheader("AI Features")
+            st.subheader("🤖 AI Features")
 
             st.markdown("""
 ✅ Executive Summary
@@ -126,103 +88,53 @@ def show_report_analyzer():
 
     st.write("")
 
-    # =====================================================
-    # PROCESSING STATUS
-    # =====================================================
+    if st.session_state.report_analyzed and uploaded_file is not None:
 
-    with st.container(border=True):
+        # =====================================================
+        # PROCESSING STATUS
+        # =====================================================
 
-        st.subheader("AI Processing Pipeline")
+        with st.container(border=True):
 
-        progress = st.progress(100)
+            st.subheader("⚙️ Processing Status")
 
-        st.write("")
+            st.progress(100)
 
-        c1, c2 = st.columns(2)
-
-        with c1:
-
-            st.success("✅ Reading PDF")
-
-            st.success("✅ Extracting Financial Data")
-
-            st.success("✅ Detecting Risks")
-
-        with c2:
-
-            st.success("✅ Generating AI Summary")
-
-            st.success("✅ Calculating Financial Ratios")
-
-            st.success("✅ Preparing Recommendation")
+            st.success("Analysis Ready")
 
         st.write("")
 
-        st.info(
-            "AI analysis completed successfully. The report is ready for review."
+        # =====================================================
+        # FINANCIAL METRICS
+        # =====================================================
+
+        st.subheader("📊 Financial Highlights")
+
+        c1, c2, c3, c4 = st.columns(4)
+
+        c1.metric("Revenue", "$394B", "+18%")
+        c2.metric("Net Income", "$98B", "+12%")
+        c3.metric("EPS", "$6.14", "+9%")
+        c4.metric("Operating Margin", "30%", "+2%")
+
+        st.write("")
+
+        # =====================================================
+        # AI RESULTS
+        # =====================================================
+
+        tab1, tab2, tab3, tab4 = st.tabs(
+            [
+                "📋 Summary",
+                "⚠ Risks",
+                "💡 Opportunities",
+                "🟢 Recommendation"
+            ]
         )
 
-    st.write("")
+        with tab1:
 
-    # =====================================================
-# FINANCIAL HIGHLIGHTS
-# =====================================================
-
-    st.markdown("## Financial Highlights")
-
-    st.caption("Key financial metrics extracted from the uploaded report.")
-
-    c1, c2, c3, c4 = st.columns(4)
-
-    with c1:
-        with st.container(border=True):
-            st.metric(
-                "Revenue",
-                "$394B",
-                "+18%"
-            )
-
-    with c2:
-        with st.container(border=True):
-            st.metric(
-                "Net Income",
-                "$98B",
-                "+12%"
-            )
-
-    with c3:
-        with st.container(border=True):
-            st.metric(
-                "EPS",
-                "$6.14",
-                "+9%"
-            )
-
-    with c4:
-        with st.container(border=True):
-            st.metric(
-                "Operating Margin",
-                "30%",
-                "+2%"
-            )
-    st.write("")
-
-    # =====================================================
-    # AI RESULTS
-    # =====================================================
-
-    tab1, tab2, tab3, tab4 = st.tabs(
-        [
-            "Summary",
-            "Risks",
-            "Opportunities",
-            "Recommendation"
-        ]
-    )
-
-    with tab1:
-
-        st.success("""
+            st.success("""
 ### Executive Summary
 
 • Revenue increased by **18%**
@@ -236,9 +148,9 @@ def show_report_analyzer():
 • Management outlook remains positive.
 """)
 
-    with tab2:
+        with tab2:
 
-        st.warning("""
+            st.warning("""
 ### Key Risks
 
 • Regulatory uncertainty
@@ -252,9 +164,9 @@ def show_report_analyzer():
 • Premium valuation
 """)
 
-    with tab3:
+        with tab3:
 
-        st.info("""
+            st.info("""
 ### Growth Opportunities
 
 • AI expansion
@@ -268,9 +180,9 @@ def show_report_analyzer():
 • Product innovation
 """)
 
-    with tab4:
+        with tab4:
 
-        st.success("""
+            st.success("""
 ## 🟢 BUY
 
 **Confidence Score: 92%**
@@ -286,7 +198,7 @@ def show_report_analyzer():
 ✅ Attractive long-term outlook
 """)
 
-    st.write("")
+        st.write("")
 
     # =====================================================
     # QUICK ACTIONS
@@ -299,25 +211,25 @@ def show_report_analyzer():
         b1, b2, b3 = st.columns(3)
 
         with b1:
-         if st.button(
-          "Download Summary",
-          use_container_width=True
-        ):
-            st.success("Summary downloaded successfully!")
+            st.button(
+                "📥 Download Summary",
+                key="report_download",
+                use_container_width=True
+            )
 
         with b2:
-         if st.button(
-          "Ask AI",
-          use_container_width=True
-        ):
-            navigate("AI Chat")
+            st.button(
+                "🤖 Ask AI",
+                key="report_ai",
+                use_container_width=True
+            )
 
         with b3:
-         if st.button(
-          "Upload Another",
-          use_container_width=True
-        ):
-            st.rerun()
+            st.button(
+                "📄 Upload Another",
+                key="report_upload",
+                use_container_width=True
+            )
 
     st.divider()
 

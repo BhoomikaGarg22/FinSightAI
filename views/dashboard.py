@@ -104,14 +104,8 @@ def show_dashboard():
 
     with left:
 
-        company = st.text_input(
-            "Search Company",
-            value=st.session_state.get("company", "Apple"),
-            placeholder="Search Apple, Tesla, NVIDIA..."
-        )
-
-        if company:
-            st.session_state["company"] = company
+        from utils.helpers import render_company_selector
+        company = render_company_selector("Search Company")
 
     with right:
 
@@ -122,10 +116,13 @@ def show_dashboard():
             "Analyze",
              use_container_width=True,
         ):
-            navigate("Stock Analysis")
-            st.success(f"Analyzing {company}...")
+            if company:
+                navigate("Stock Analysis")
+                st.success(f"Analyzing {company}...")
+            else:
+                st.warning("Please select a company first.")
 
-    company = st.session_state.get("company", "Apple")
+    company = st.session_state.get("company")
 
     company_data = companies.get(
         company,

@@ -37,16 +37,27 @@ def warning_box(text):
 
 def recommendation_card(recommendation, confidence):
 
-    color = "🟢"
-
+    tone = "success"
     if recommendation == "HOLD":
-        color = "🟡"
-
+        tone = "warning"
     elif recommendation == "SELL":
-        color = "🔴"
+        tone = "error"
 
-    st.success(f"""
-### {color} {recommendation}
+    if tone == "success":
+        st.success(f"""
+### {recommendation}
+
+**Confidence:** {confidence}
+""")
+    elif tone == "warning":
+        st.warning(f"""
+### {recommendation}
+
+**Confidence:** {confidence}
+""")
+    else:
+        st.error(f"""
+### {recommendation}
 
 **Confidence:** {confidence}
 """)

@@ -63,11 +63,8 @@ def show_stock_analysis_v2():
 
     with col1:
 
-        search = st.text_input(
-            "Search Company",
-            value=company,
-            placeholder="Apple, Tesla, NVIDIA..."
-        )
+        from utils.helpers import render_company_selector
+        search = render_company_selector("Search Company")
 
     with col2:
 
@@ -80,12 +77,15 @@ def show_stock_analysis_v2():
             use_container_width=True
         ):
 
-            set_selected_company(search)
+            if search:
+                set_selected_company(search)
 
-            with st.spinner("Analyzing company..."):
-                time.sleep(2)
+                with st.spinner("Analyzing company..."):
+                    time.sleep(2)
 
-            st.rerun()
+                st.rerun()
+            else:
+                st.warning("Please select a company first.")
 
     company = get_selected_company()
     company_data = get_company_data(company)
