@@ -1,5 +1,6 @@
 import streamlit as st
 from utils.navigation import navigate
+from backend.api import chat_with_ai
 
 def show_ai_chat():
 
@@ -67,124 +68,32 @@ def show_ai_chat():
     # CHAT WINDOW
     # =====================================================
 
-    with st.container(border=True):
-
-        st.subheader("Conversation")
-
-        st.chat_message("user").write(
-            "Should I invest in NVIDIA for the long term?"
-        )
-
-        with st.chat_message("assistant"):
-
-         st.markdown("### Investment Summary")
-
-         st.write(
-          """
-        NVIDIA continues to benefit from strong AI adoption,
-        rapid data center expansion and cloud infrastructure demand.
-
-        Overall fundamentals remain strong for long-term investors.
-        """
-           )
-
-        st.divider()
-
-        left, right = st.columns(2)
-
-        with left:
-
-          st.markdown("#### Strengths")
-
-          st.markdown("""
-        - Industry leader in AI chips
-        - Strong revenue growth
-        - Expanding cloud partnerships
-        - High institutional confidence
-        """)
-
-        with right:
-
-          st.markdown("#### Risks")
-
-          st.markdown("""
-        - Premium valuation
-        - Increasing competition
-        - Export restrictions
-        - Market volatility
-        """)
-
-        
-        st.divider()
-
-        st.markdown("#### Analysis Overview")
-
-        c1, c2, c3 = st.columns(3)
-
-        with c1:
-         st.metric(
-          "Market Sentiment",
-          "Bullish"
-         )
-
-        with c2:
-         st.metric(
-          "Risk Level",
-          "Moderate"
-         )
-
-        with c3:
-         st.metric(
-          "Time Horizon",
-          "Long-Term"
-         )
-
-        st.divider()
-
-        c1, c2 = st.columns(2)
-
-        with c1:
-
-         with st.container(border=True):
-
-            st.metric(
-                "Recommendation",
-                "BUY"
-            )
-
-        with c2:
-
-         with st.container(border=True):
-
-            st.metric(
-                "Confidence",
-                "91%"
-            )
-
-        st.divider()
-
-        st.caption("Sources")
-
-        st.caption("Sources")
-
-        st.markdown("""
-        - Yahoo Finance
-        - SEC Filings
-        - Reuters
-        - Company Earnings Report
-        """)
-
-    st.write("")
-
+    #
     # =====================================================
     # CHAT INPUT
     # =====================================================
 
-    st.chat_input(
+    question = st.chat_input(
         placeholder="Ask about stocks, earnings, valuation or market trends..."
     )
 
-    st.write("")
+    if question:
+
+        with st.container(border=True):
+
+            st.subheader("Conversation")
+
+            st.chat_message("user").write(question)
+
+            with st.chat_message("assistant"):
+
+                with st.spinner("Thinking..."):
+
+                    answer = chat_with_ai(question)
+
+                st.write(answer)
+
+    
 
 
     # =====================================================
