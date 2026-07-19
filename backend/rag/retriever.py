@@ -1,4 +1,4 @@
-from rag.vector_store import load_vector_store
+from backend.rag.vector_store import load_vector_store
 
 
 def get_retriever(k=5):
