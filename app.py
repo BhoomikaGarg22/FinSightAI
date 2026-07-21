@@ -11,11 +11,32 @@ st.set_page_config(
 )
 
 # -----------------------------------
+# Initialize Session State
+# -----------------------------------
+
+if "theme" not in st.session_state:
+    st.session_state.theme = "Light"
+
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "Dashboard"
+# -----------------------------------
 # Load CSS
 # -----------------------------------
+# -------------------------------
+# Theme Selection
+# -------------------------------
+
+theme = st.session_state.get("theme", "Light")
+
+# Common CSS
 with open("assets/css/common.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
+# Theme CSS
+css_file = "assets/css/dark.css" if theme == "Dark" else "assets/css/light.css"
+
+with open(css_file) as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 # -----------------------------------
 # Imports
 # -----------------------------------

@@ -60,17 +60,22 @@ def show_settings():
     with st.container(border=True):
 
         st.subheader("Appearance")
-        st.caption(
-         "Customize how FinSight AI looks and behaves."
-        )
-        st.selectbox(
+
+        st.caption("Customize how FinSight AI looks and behaves.")
+
+    # Current theme
+        current_theme = st.session_state.get("theme", "Light")
+
+        theme = st.selectbox(
             "Theme",
-            [
-                "System Default",
-                "Light",
-                "Dark"
-            ]
+            ["Light", "Dark"],
+            index=0 if current_theme == "Light" else 1
         )
+
+     # Change theme
+        if theme != current_theme:
+            st.session_state.theme = theme
+            st.rerun()
 
         st.checkbox(
             "Compact Dashboard",
@@ -151,7 +156,9 @@ def show_settings():
           "Save Settings",
           use_container_width=True
         ):
+            st.session_state.theme = theme
             st.success("Settings saved successfully!")
+            st.rerun()
 
         with b2:
          if st.button(

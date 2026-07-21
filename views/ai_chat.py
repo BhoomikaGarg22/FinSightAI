@@ -63,7 +63,14 @@ def show_ai_chat():
             st.caption("Understand valuation metrics")
 
     st.write("")
+    
+     # =====================================================
+    # REPORT CONTEXT
+    # =====================================================
 
+    if st.session_state.get("report_uploaded", False):
+        st.success("Financial report loaded successfully.")
+        st.info("Your uploaded report is available for questions.")
     # =====================================================
     # CHAT WINDOW
     # =====================================================
@@ -113,7 +120,7 @@ def show_ai_chat():
         ):
             navigate(
              "Stock Analysis",
-              company=company
+              company=st.session_state.get("company")
             )
 
         with b2:

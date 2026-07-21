@@ -1,4 +1,5 @@
 import streamlit as st
+from utils.navigation import navigate
 
 
 def show_report_analyzer():
@@ -51,42 +52,44 @@ def show_report_analyzer():
                     use_container_width=True
                 ):
                     st.session_state.report_analyzed = True
+                    st.session_state.report_uploaded = True
+                    st.session_state.uploaded_file = uploaded_file
                     st.success("Report analysis started successfully")
 
-                if st.session_state.report_analyzed:
+                if st.session_state.report_analyzed and uploaded_file is not None:
                     st.info("Analysis results are now available for the uploaded PDF.")
+                
+                else:
 
-            else:
-
-                st.info(
+                 st.info(
                     "Upload a financial report to begin AI analysis."
                 )
 
     with right:
 
-        with st.container(border=True):
+             with st.container(border=True):
 
-            st.subheader("AI Features")
+               st.subheader("AI Features")
 
-            st.markdown("""
-Executive Summary
+               st.markdown("""
+               Executive Summary
 
-Financial Highlights
+               Financial Highlights
 
-Risk Timeline
+               Risk Timeline
 
-Growth Opportunities
+               Growth Opportunities
 
-ESG Insights
+               ESG Insights
 
-Contradiction Detection
+               Contradiction Detection
 
-Financial Ratios
+               Financial Ratios
 
-Investment Recommendation
-""")
+               Investment Recommendation
+               """)
 
-    st.write("")
+             st.write("")
 
     if st.session_state.report_analyzed and uploaded_file is not None:
 
@@ -94,7 +97,7 @@ Investment Recommendation
         # PROCESSING STATUS
         # =====================================================
 
-        with st.container(border=True):
+          with st.container(border=True):
 
             st.subheader("Processing Status")
 
@@ -102,28 +105,26 @@ Investment Recommendation
 
             st.success("Analysis Ready")
 
-        st.write("")
+          st.write("")
 
         # =====================================================
         # FINANCIAL METRICS
         # =====================================================
 
-        st.subheader("Financial Highlights")
+          st.subheader("Financial Highlights")
 
-        c1, c2, c3, c4 = st.columns(4)
+          c1, c2, c3, c4 = st.columns(4)
+          c1.metric("Revenue", "$394B", "+18%")
+          c2.metric("Net Income", "$98B", "+12%")
+          c3.metric("EPS", "$6.14", "+9%")
+          c4.metric("Operating Margin", "30%", "+2%")
 
-        c1.metric("Revenue", "$394B", "+18%")
-        c2.metric("Net Income", "$98B", "+12%")
-        c3.metric("EPS", "$6.14", "+9%")
-        c4.metric("Operating Margin", "30%", "+2%")
-
-        st.write("")
+          st.write("")
 
         # =====================================================
         # AI RESULTS
-        # =====================================================
-
-        tab1, tab2, tab3, tab4 = st.tabs(
+        # =====================================================        
+          tab1, tab2, tab3, tab4 = st.tabs(
             [
                 "Summary",
                 "Risks",
@@ -132,105 +133,127 @@ Investment Recommendation
             ]
         )
 
-        with tab1:
+          with tab1:
 
             st.success("""
-### Executive Summary
+             ### Executive Summary
 
-• Revenue increased by **18%**
+             • Revenue increased by **18%**
 
-• Profit margins improved.
+             • Profit margins improved.
 
-• Cash reserves remain strong.
+             • Cash reserves remain strong.
 
-• AI investments continue driving growth.
+             • AI investments continue driving growth.
 
-• Management outlook remains positive.
-""")
+             • Management outlook remains positive.
+             """)
 
-        with tab2:
+          with tab2:
 
             st.warning("""
-### Key Risks
+            ### Key Risks
 
-• Regulatory uncertainty
+             • Regulatory uncertainty
 
-• High AI competition
+             • High AI competition
 
-• Supply chain dependency
+             • Supply chain dependency
 
-• Currency fluctuations
+             • Currency fluctuations
 
-• Premium valuation
-""")
+             • Premium valuation
+             """)
 
-        with tab3:
+            with tab3:
 
-            st.info("""
-### Growth Opportunities
+             st.info("""
+         ### Growth Opportunities
 
-• AI expansion
+         • AI expansion
 
-• Cloud business growth
+         • Cloud business growth
 
-• Emerging markets
+         • Emerging markets
 
-• Subscription services
+         • Subscription services
 
-• Product innovation
-""")
+         • Product innovation
+         """)
 
-        with tab4:
+          with tab4:
 
             st.success("""
-## BUY
+         ## BUY
 
-**Confidence Score: 92%**
+         **Confidence Score: 92%**
 
-### Why?
+         ### Why?
 
-Strong balance sheet
+         Strong balance sheet
 
-Healthy cash flow
+         Healthy cash flow
 
-Positive earnings trend
+         Positive earnings trend
 
-Attractive long-term outlook
-""")
+         Attractive long-term outlook
+         """)
 
-        st.write("")
+          st.write("")
+          summary = """
+          Executive Summary
 
+          • Revenue increased by 18%
+
+          • Profit margins improved.
+
+          • Cash reserves remain strong.
+
+          • AI investments continue driving growth.
+
+          • Management outlook remains positive.
+
+          Recommendation: BUY
+
+          Confidence: 92%
+          """
     # =====================================================
     # QUICK ACTIONS
     # =====================================================
 
     with st.container(border=True):
 
-        st.subheader("Quick Actions")
+         st.subheader("Quick Actions")
 
-        b1, b2, b3 = st.columns(3)
+         b1, b2, b3 = st.columns(3)
 
-        with b1:
-            st.button(
-                "Download Summary",
-                key="report_download",
-                use_container_width=True
-            )
+         with b1:
 
-        with b2:
-            st.button(
-                "Ask AI",
-                key="report_ai",
-                use_container_width=True
-            )
+           st.download_button(
+            label="Download Summary",
+            data=st.session_state.get("summary", ""),
+            file_name="Financial_Report_Summary.txt",
+            mime="text/plain",
+            use_container_width=True,
+            disabled="summary" not in st.session_state
+        )
 
-        with b3:
-            st.button(
-                "Upload Another",
-                key="report_upload",
-                use_container_width=True
-            )
+         with b2:
+            if st.button("Ask AI", use_container_width=True):
+               st.session_state.report_uploaded = True
+               navigate("AI Chat")
+               
+         with b3:
+            if st.button(
+             "Upload Another",
+             use_container_width=True
+         ):
+
+             st.session_state.report_analyzed = False
+             st.session_state.pop("uploaded_file", None)
+             st.session_state.pop("report_uploaded", None)
+
+             st.rerun()     
 
     st.divider()
-
     st.caption("© 2026 FinSight AI | AI-Powered Financial Research Platform")
