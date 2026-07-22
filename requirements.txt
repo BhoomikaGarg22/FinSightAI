@@ -3,5 +3,29 @@ streamlit-option-menu
 plotly
 pandas
 yfinance
+
+# AI
 google-genai
+google-generativeai
+
+# Environment
 python-dotenv
+
+# LangChain
+langchain
+langchain-core
+langchain-community
+langchain-google-genai
+langchain-chroma
+
+# Vector Database
+chromadb
+
+# Authentication
+bcrypt
+
+# PDF Processing (if using Report Analyzer)
+pypdf
+
+# Email Validator
+email-validator
