@@ -1,63 +1,148 @@
-from views.stock_analysis_v2 import show_stock_analysis_v2
 import streamlit as st
-from views.watchlist import show_watchlist
-# -----------------------------------
-# Page Config
-# -----------------------------------
+
+# --------------------------------------------------
+# Page Configuration
+# --------------------------------------------------
+
 st.set_page_config(
     page_title="FinSight AI",
     page_icon="assets/images/icon_logo.png",
-    layout="wide"
+    layout="wide",
 )
 
-# -----------------------------------
-# Load CSS
-# -----------------------------------
+# --------------------------------------------------
+# Load Global CSS
+# --------------------------------------------------
+
 with open("assets/css/common.css") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    st.markdown(
+        f"<style>{f.read()}</style>",
+        unsafe_allow_html=True,
+    )
 
-# -----------------------------------
-# Imports
-# -----------------------------------
+# --------------------------------------------------
+# Initialize Database
+# --------------------------------------------------
+
+from backend.models.init_db import create_tables
+
+if "db_initialized" not in st.session_state:
+    create_tables()
+    st.session_state.db_initialized = True
+
+# --------------------------------------------------
+# Session State
+# --------------------------------------------------
+
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+
+if "user" not in st.session_state:
+    st.session_state.user = None
+
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "Dashboard"
+
+# Authentication page state
+if "auth_page" not in st.session_state:
+    st.session_state.auth_page = "login"
+
+# --------------------------------------------------
+# Email Verification
+# --------------------------------------------------
+
+if "verify" in st.query_params:
+
+    from views.verify_email import show_verify_page
+
+    show_verify_page()
+
+    st.stop()
+
+# --------------------------------------------------
+# Password Reset
+# --------------------------------------------------
+
+if "reset" in st.query_params:
+
+    from views.reset_password import show_reset_password
+
+    show_reset_password()
+
+    st.stop()
+
+# --------------------------------------------------
+# Authentication
+# --------------------------------------------------
+
+if not st.session_state.logged_in:
+
+    if st.session_state.auth_page == "forgot_password":
+
+        from views.forgot_password import show_forgot_password
+
+        show_forgot_password()
+
+    else:
+
+        from views.auth import show_auth
+
+        show_auth()
+
+    st.stop()
+
+# --------------------------------------------------
+# Sidebar
+# --------------------------------------------------
+
 from components.sidebar import show_sidebar
-
-from views.dashboard import show_dashboard
-from views.stock_analysis_v2 import show_stock_analysis_v2
-from views.report_analyzer import show_report_analyzer
-from views.news_sentiment import show_news_sentiment
-from views.ai_chat import show_ai_chat
-from views.settings import show_settings
-
-# -----------------------------------
-# Sidebar
-# -----------------------------------
-# -----------------------------------
-# Sidebar
-# -----------------------------------
 
 show_sidebar()
 
-current_page = st.session_state.current_page
-# -----------------------------------
+# --------------------------------------------------
 # Routing
-# -----------------------------------
+# --------------------------------------------------
+
+current_page = st.session_state.current_page
+
 if current_page == "Dashboard":
+
+    from views.dashboard import show_dashboard
+
     show_dashboard()
 
 elif current_page == "Stock Analysis":
+
+    from views.stock_analysis_v2 import show_stock_analysis_v2
+
     show_stock_analysis_v2()
 
 elif current_page == "Watchlist":
+
+    from views.watchlist import show_watchlist
+
     show_watchlist()
 
 elif current_page == "Report Analyzer":
+
+    from views.report_analyzer import show_report_analyzer
+
     show_report_analyzer()
 
 elif current_page == "News & Sentiment":
+
+    from views.news_sentiment import show_news_sentiment
+
     show_news_sentiment()
 
 elif current_page == "AI Chat":
+
+    from views.ai_chat import show_ai_chat
+
     show_ai_chat()
 
 elif current_page == "Settings":
-    show_settings()
+
+    from views.settings_page import render_settings
+
+    render_settings()
