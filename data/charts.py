@@ -1,47 +1,47 @@
 import pandas as pd
+import yfinance as yf
+
+COMPANY_TICKERS = {
+    "Apple": "AAPL",
+    "Tesla": "TSLA",
+    "Microsoft": "MSFT",
+    "NVIDIA": "NVDA",
+}
 
 
-def get_chart_data(company):
+def get_chart_data():
 
-    prices = {
-        "Apple": [
-            180,181,182,181,183,
-            184,185,186,187,188,
-            187,186,188,189,190,
-            191,190,192,193,194,
-            193,194,195,196,197,
-            196,198,199,200,201
-        ],
+    frames = []
 
-        "Tesla": [
-            240,242,244,243,246,
-            248,247,249,250,252,
-            253,251,252,254,255,
-            256,257,258,260,261,
-            262,261,263,265,264,
-            266,267,269,270,272
-        ],
+    for company, ticker in COMPANY_TICKERS.items():
 
-        "NVIDIA": [
-            120,121,122,123,124,
-            125,126,127,128,129,
-            130,129,131,132,133,
-            134,135,136,137,138,
-            139,140,141,140,142,
-            143,144,145,146,147
-        ],
+        try:
 
-        "Microsoft": [
-            420,421,422,423,424,
-            425,426,427,428,429,
-            430,431,432,433,434,
-            435,436,437,438,439,
-            440,441,442,443,444,
-            445,446,447,448,449
-        ]
-    }
+            df = yf.download(
+                ticker,
+                period="6mo",
+                interval="1d",
+                auto_adjust=True,
+                progress=False,
+            )
 
-    return pd.DataFrame({
-        "Date": pd.date_range("2025-01-01", periods=30),
-        "Price": prices.get(company, prices["Apple"])
-    })
+            if df.empty:
+                continue
+
+            # Handle MultiIndex columns if present
+            if isinstance(df.columns, pd.MultiIndex):
+                df.columns = df.columns.get_level_values(0)
+
+            df = df.reset_index()[["Date", "Close"]]
+            df.rename(columns={"Close": "Price"}, inplace=True)
+            df["Company"] = company
+
+            frames.append(df)
+
+        except Exception as e:
+            print(f"{company}: {e}")
+
+    if not frames:
+        return pd.DataFrame(columns=["Date", "Price", "Company"])
+
+    return pd.concat(frames, ignore_index=True)

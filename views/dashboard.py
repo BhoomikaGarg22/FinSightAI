@@ -182,76 +182,63 @@ def show_dashboard():
     with left:
 
         with st.container(border=True):
-
+            
             st.subheader("Market Overview")
 
-            df = get_chart_data(company)
+            df = get_chart_data()
 
             fig = px.line(
-               df,
-               x="Date",
-               y="Price",
-               markers=True,
-               line_shape="spline"
+                df,
+                x="Date",
+                y="Price",
+                color="Company",
+                markers=False,
+                line_shape="spline",
+                color_discrete_map={
+                    "Apple": "#4F46E5",
+                    "Tesla": "#EF4444",
+                    "Microsoft": "#10B981",
+                    "NVIDIA": "#F59E0B",
+                }
             )
 
             fig.update_traces(
-             line=dict(
-              width=4,
-              color="#4F46E5"
-             ),
-             marker=dict(
-              size=8,
-              color="#4F46E5",
-              line=dict(
-               width=2,
-               color="white"
-              )
+                line=dict(width=3),
+                marker=dict(
+                    size=6,
+                    line=dict(
+                        width=1,
+                        color="white"
+                    )
+                )
             )
-           )
 
             fig.update_layout(
+    template="plotly_white",
+    height=500,
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="white",
+    margin=dict(l=20, r=20, t=20, b=20),
+    hovermode="x unified",
 
-             template="plotly_white",
+    xaxis=dict(
+        title="",
+        showgrid=False,
+        zeroline=False
+    ),
 
-             paper_bgcolor="rgba(0,0,0,0)",
+    yaxis=dict(
+        title="Stock Price ($)",
+        gridcolor="#EEF2F7"
+    ),
 
-             plot_bgcolor="white",
-
-             margin=dict(
-              l=15,
-              r=15,
-              t=20,
-              b=15
-             ),
-
-             height=420,
-
-             hovermode="x unified",
-
-             xaxis_title="",
-
-             yaxis_title="Stock Price ($)",
-
-             font=dict(
-              size=13,
-              color="#374151"
-             ),
-
-             xaxis=dict(
-              showgrid=False,
-              zeroline=False
-             ),
-
-             yaxis=dict(
-              gridcolor="#EEF2F7"
-             ),
-
-             legend=dict(
-               orientation="h"
-             )
-
+    legend=dict(
+        orientation="h",
+        y=-0.18,
+        x=0.5,
+        xanchor="center"
     )
+)
 
             st.plotly_chart(fig, use_container_width=True)
 
@@ -293,48 +280,60 @@ def show_dashboard():
             )
 
             pie.update_layout(
+    template="plotly_white",
+    height=500,
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(0,0,0,0)",
+    margin=dict(l=10, r=10, t=20, b=60),
 
-             template="plotly_white",
+    font=dict(
+        color="#111827",
+        size=14
+    ),
 
-             paper_bgcolor="rgba(0,0,0,0)",
+    showlegend=True,
 
-             plot_bgcolor="rgba(0,0,0,0)",
-
-             margin=dict(
-              l=10,
-              r=10,
-              t=20,
-              b=20
-             ),
-
-             font=dict(
-              color="#374151",
-              size=13
-             ),
-
-             height=420,
-
-             legend=dict(
-              orientation="h",
-              y=-0.15
-             )
-
-           )
+    legend=dict(
+        orientation="h",
+        y=-0.12,
+        x=0.5,
+        xanchor="center",
+        font=dict(
+            size=13,
+            color="#111827"
+        )
+    )
+)
+            
             
             pie.update_traces(
-             textinfo="percent",
-             textfont_size=14,
-             marker=dict(
-              line=dict(
-               color="white",
-               width=2
-              )
-             )
-            )
+    hole=0.65,
+
+    textinfo="percent",
+
+    textposition="inside",
+
+    textfont=dict(
+        size=15,
+        color="white"
+    ),
+
+    marker=dict(
+        line=dict(
+            color="white",
+            width=2
+        )
+    ),
+
+    hovertemplate="<b>%{label}</b><br>%{value}%<extra></extra>"
+)
 
             st.plotly_chart(
                 pie,
-                use_container_width=True
+                use_container_width=True,
+                config={
+                    "displayModeBar": False
+                }
             )
 
     st.write("")
@@ -515,3 +514,6 @@ def show_dashboard():
     st.divider()
 
     st.caption("© 2026 FinSight AI | AI-Powered Financial Research Platform")
+
+    st.write(df.shape)
+    st.write(df.head())

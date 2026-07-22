@@ -1,135 +1,182 @@
 import streamlit as st
+
 from utils.navigation import navigate
 from backend.api import chat_with_ai
 
+from backend.services.chatbot_service import (
+    save_chat,
+    get_chat_history,
+    clear_history,
+)
+
+
 def show_ai_chat():
 
-    # =====================================================
-    # HEADER
-    # =====================================================
+    # ------------------------------------
+    # Session State
+    # ------------------------------------
 
-    st.markdown("""
-    <div class="page-header">
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
 
-    <h1>AI Financial Assistant</h1>
+    # ------------------------------------
+    # Header
+    # ------------------------------------
 
-    <p>
-    Your AI-powered financial research companion.
-    Analyze stocks, summarize reports, understand market trends,
-    and receive intelligent investment insights.
-    </p>
+    st.markdown(
+        """
+        <div class="page-header">
 
-    <div class="market-status">
+        <h1>AI Financial Assistant</h1>
 
-    <span class="status-dot"></span>
+        <p>
+        Your AI-powered financial research companion.
+        Analyze stocks, summarize reports,
+        understand market trends,
+        and receive intelligent investment insights.
+        </p>
 
-    <b>AI Assistant Online</b>
-    </div>
+        <div class="market-status">
+            <span class="status-dot"></span>
+            <b>AI Assistant Online</b>
+        </div>
 
-    </div>
-    """, unsafe_allow_html=True)
-    st.caption(
-        "Ask questions about stocks, financial reports, earnings, market trends, and investment opportunities."
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
 
-    st.write("")
+    st.caption(
+        "Ask questions about stocks, reports, valuation and markets."
+    )
 
-    # =====================================================
-    # SUGGESTED PROMPTS
-    # =====================================================
+    # ------------------------------------
+    # Sidebar History
+    # ------------------------------------
 
-    st.subheader("Suggested Questions")
+    with st.expander("📜 Chat History"):
 
-    col1, col2 = st.columns(2)
+        history = get_chat_history(
+            st.session_state.user["id"]
+        )
 
-    with col1:
+        if history:
 
-        with st.container(border=True):
-            st.markdown("### Analyze Apple's Q2 Earnings")
-            st.caption("Revenue, profitability and AI outlook")
+            for chat in history:
 
-        with st.container(border=True):
-            st.markdown("### Compare Tesla vs NVIDIA")
-            st.caption("Growth, valuation and future potential")
+                st.markdown(
+                    f"""
+                    **Q:** {chat["question"]}
 
-    with col2:
+                    **A:** {chat["answer"]}
 
-        with st.container(border=True):
-            st.markdown("### Market Outlook")
-            st.caption("Summarize today's important events")
+                    ---
+                    """
+                )
 
-        with st.container(border=True):
-            st.markdown("### Explain P/E Ratio")
-            st.caption("Understand valuation metrics")
+        else:
+            st.info("No previous chats.")
 
-    st.write("")
+        if st.button(
+            "🗑 Clear History",
+            width="stretch",
+        ):
+            clear_history(
+                st.session_state.user["id"]
+            )
 
-    # =====================================================
-    # CHAT WINDOW
-    # =====================================================
+            st.success("History cleared.")
 
-    #
-    # =====================================================
-    # CHAT INPUT
-    # =====================================================
+            st.rerun()
+
+    st.divider()
+
+    # ------------------------------------
+    # Previous Conversation
+    # ------------------------------------
+
+    for message in st.session_state.messages:
+
+        with st.chat_message(message["role"]):
+            st.write(message["content"])
+
+    # ------------------------------------
+    # Chat Input
+    # ------------------------------------
 
     question = st.chat_input(
-        placeholder="Ask about stocks, earnings, valuation or market trends..."
+        "Ask about stocks..."
     )
 
     if question:
 
-        with st.container(border=True):
+        st.session_state.messages.append(
+            {
+                "role": "user",
+                "content": question,
+            }
+        )
 
-            st.subheader("Conversation")
+        with st.chat_message("user"):
+            st.write(question)
 
-            st.chat_message("user").write(question)
+        with st.chat_message("assistant"):
 
-            with st.chat_message("assistant"):
+            with st.spinner("Thinking..."):
 
-                with st.spinner("Thinking..."):
+                answer = chat_with_ai(question)
 
-                    answer = chat_with_ai(question)
+            st.write(answer)
 
-                st.write(answer)
+        st.session_state.messages.append(
+            {
+                "role": "assistant",
+                "content": answer,
+            }
+        )
 
-    
+        save_chat(
+            st.session_state.user["id"],
+            question,
+            answer,
+        )
 
+    st.divider()
 
-    # =====================================================
-    # QUICK ACTIONS
-    # =====================================================
+    # ------------------------------------
+    # Quick Actions
+    # ------------------------------------
 
-    with st.container(border=True):
+    st.subheader("Quick Actions")
 
-        st.subheader("Quick Actions")
+    c1, c2, c3 = st.columns(3)
 
-        b1, b2, b3 = st.columns(3)
+    with c1:
 
-        with b1:
-         if st.button(
-          "Analyze Stock",
-          use_container_width=True
+        if st.button(
+            "Analyze Stock",
+            width="stretch",
         ):
-            navigate(
-             "Stock Analysis",
-              company=company
-            )
+            navigate("Stock Analysis")
 
-        with b2:
-         if st.button(
-          "Financial Report",
-          use_container_width=True
+    with c2:
+
+        if st.button(
+            "Financial Report",
+            width="stretch",
         ):
             navigate("Report Analyzer")
 
-        with b3:
-         if st.button(
-          "Market News",
-          use_container_width=True
+    with c3:
+
+        if st.button(
+            "Market News",
+            width="stretch",
         ):
             navigate("News & Sentiment")
 
     st.divider()
 
-    st.caption("© 2026 FinSight AI | AI-Powered Financial Research Platform")
+    st.caption(
+        "© 2026 FinSight AI | AI-Powered Financial Research Platform"
+    )
