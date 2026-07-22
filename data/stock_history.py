@@ -1,38 +1,28 @@
-stock_history = {
+import pandas as pd
+import yfinance as yf
 
-    "Apple": {
-        "days": ["Mon","Tue","Wed","Thu","Fri"],
-        "prices": [182,184,186,188,189]
-    },
 
-    "Microsoft": {
-        "days": ["Mon","Tue","Wed","Thu","Fri"],
-        "prices": [404,406,409,411,412]
-    },
+def get_stock_history(ticker):
+    try:
+        df = yf.download(
+            ticker,
+            period="6mo",
+            interval="1d",
+            auto_adjust=True,
+            progress=False,
+        )
 
-    "NVIDIA": {
-        "days": ["Mon","Tue","Wed","Thu","Fri"],
-        "prices": [770,781,792,804,812]
-    },
+        if df.empty:
+            return None
 
-    "Tesla": {
-        "days": ["Mon","Tue","Wed","Thu","Fri"],
-        "prices": [188,191,194,197,198]
-    },
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
 
-    "Amazon": {
-        "days": ["Mon","Tue","Wed","Thu","Fri"],
-        "prices": [181,182,183,185,186]
-    },
+        df = df.reset_index()[["Date", "Close"]]
+        df.columns = ["Date", "Price"]
 
-    "Meta": {
-        "days": ["Mon","Tue","Wed","Thu","Fri"],
-        "prices": [512,515,518,520,524]
-    },
+        return df
 
-    "Alphabet": {
-        "days": ["Mon","Tue","Wed","Thu","Fri"],
-        "prices": [176,177,178,180,181]
-    }
-
-}
+    except Exception as e:
+        print(e)
+        return None
