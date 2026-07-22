@@ -705,3 +705,11 @@ div[data-testid="stVerticalBlockBorderWrapper"]:hover {
     box-shadow: 0 12px 24px rgba(0,0,0,0.08);
 
 }
+
+.js-plotly-plot text {
+    fill: #111827 !important;
+}
+
+.js-plotly-plot .legendtext {
+    fill: #111827 !important;
+}

@@ -8,49 +8,68 @@ from data.reports import reports
 def get_selected_company():
     """Return selected company from session state."""
     company = st.session_state.get("company")
+
     if isinstance(company, str) and company.strip():
-        return company.strip().title()
-    return None
+        return company.strip()
+
+    return "All Companies"
 
 
 def get_company_options():
-    """Return sorted company options for dropdown selectors."""
-    return sorted(companies.keys())
+    """Return company options including All Companies."""
+    return ["All Companies"] + sorted(companies.keys())
 
 
-def render_company_selector(label="Search companies"):
-    """Render a dropdown company selector with a placeholder hint only."""
-    options = sorted(companies.keys())
+def render_company_selector(label="Search Company"):
+    """Render company selector."""
+
+    options = get_company_options()
+
+    current = st.session_state.get("company", "All Companies")
+
+    if current not in options:
+        current = "All Companies"
+
     company = st.selectbox(
         label,
         options=options,
-        index=None,
-        placeholder="Search companies"
+        index=options.index(current),
     )
 
-    if company and company.strip():
-        set_selected_company(company)
-        return company
+    set_selected_company(company)
 
-    return None
+    return company
 
 
 def set_selected_company(company):
     """Update selected company."""
-    if isinstance(company, str) and company.strip():
-        st.session_state["company"] = company.strip().title()
+
+    if isinstance(company, str):
+        st.session_state["company"] = company.strip()
 
 
 def get_company_data(company):
     """Return company information."""
+
+    if company == "All Companies":
+        company = "Apple"
+
     return companies.get(company, companies["Apple"])
 
 
 def get_company_news(company):
-    """Return news list."""
+    """Return company news."""
+
+    if company == "All Companies":
+        company = "Apple"
+
     return news.get(company, news["Apple"])
 
 
 def get_company_report(company):
-    """Return report summary."""
+    """Return company report."""
+
+    if company == "All Companies":
+        company = "Apple"
+
     return reports.get(company, reports["Apple"])
