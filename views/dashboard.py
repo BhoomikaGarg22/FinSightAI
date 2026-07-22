@@ -208,6 +208,65 @@ def show_dashboard():
     with left:
 
         with st.container(border=True):
+<<<<<<< HEAD
+            
+            st.subheader("Market Overview")
+
+            df = get_chart_data()
+
+            fig = px.line(
+                df,
+                x="Date",
+                y="Price",
+                color="Company",
+                markers=False,
+                line_shape="spline",
+                color_discrete_map={
+                    "Apple": "#4F46E5",
+                    "Tesla": "#EF4444",
+                    "Microsoft": "#10B981",
+                    "NVIDIA": "#F59E0B",
+                }
+            )
+
+            fig.update_traces(
+                line=dict(width=3),
+                marker=dict(
+                    size=6,
+                    line=dict(
+                        width=1,
+                        color="white"
+                    )
+                )
+            )
+
+            fig.update_layout(
+    template="plotly_white",
+    height=500,
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="white",
+    margin=dict(l=20, r=20, t=20, b=20),
+    hovermode="x unified",
+
+    xaxis=dict(
+        title="",
+        showgrid=False,
+        zeroline=False
+    ),
+
+    yaxis=dict(
+        title="Stock Price ($)",
+        gridcolor="#EEF2F7"
+    ),
+
+    legend=dict(
+        orientation="h",
+        y=-0.18,
+        x=0.5,
+        xanchor="center"
+    )
+)
+=======
 
             # If a company is selected
             if company:
@@ -283,6 +342,7 @@ def show_dashboard():
                     yaxis_title="Stock Price ($)",
                     legend_title="Companies"
                 )
+>>>>>>> 0fd3a6e9cdbe350c9cf21c564cbc082a3a0a7de2
 
                 st.plotly_chart(
                     fig,
@@ -327,6 +387,55 @@ def show_dashboard():
             )
 
             pie.update_layout(
+<<<<<<< HEAD
+    template="plotly_white",
+    height=500,
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(0,0,0,0)",
+    margin=dict(l=10, r=10, t=20, b=60),
+
+    font=dict(
+        color="#111827",
+        size=14
+    ),
+
+    showlegend=True,
+
+    legend=dict(
+        orientation="h",
+        y=-0.12,
+        x=0.5,
+        xanchor="center",
+        font=dict(
+            size=13,
+            color="#111827"
+        )
+    )
+)
+            
+            
+            pie.update_traces(
+    hole=0.65,
+
+    textinfo="percent",
+
+    textposition="inside",
+
+    textfont=dict(
+        size=15,
+        color="white"
+    ),
+
+    marker=dict(
+        line=dict(
+            color="white",
+            width=2
+        )
+    ),
+
+    hovertemplate="<b>%{label}</b><br>%{value}%<extra></extra>"
+)
+=======
                 template="plotly_white",
                 height=420,
                 paper_bgcolor="rgba(0,0,0,0)",
@@ -347,10 +456,14 @@ def show_dashboard():
                     )
                 )
             )
+>>>>>>> 0fd3a6e9cdbe350c9cf21c564cbc082a3a0a7de2
 
             st.plotly_chart(
                 pie,
-                use_container_width=True
+                use_container_width=True,
+                config={
+                    "displayModeBar": False
+                }
             )
 
     st.write("")
@@ -531,3 +644,6 @@ def show_dashboard():
     st.divider()
 
     st.caption("© 2026 FinSight AI | AI-Powered Financial Research Platform")
+
+    st.write(df.shape)
+    st.write(df.head())
