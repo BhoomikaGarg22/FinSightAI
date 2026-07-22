@@ -10,33 +10,33 @@ st.set_page_config(
     layout="wide",
 )
 
-<<<<<<< HEAD
 # --------------------------------------------------
-# Load Global CSS
-# --------------------------------------------------
-
-=======
-# -----------------------------------
 # Initialize Session State
-# -----------------------------------
+# --------------------------------------------------
 
 if "theme" not in st.session_state:
     st.session_state.theme = "Light"
 
 if "current_page" not in st.session_state:
     st.session_state.current_page = "Dashboard"
-# -----------------------------------
-# Load CSS
-# -----------------------------------
-# -------------------------------
-# Theme Selection
-# -------------------------------
+
+# --------------------------------------------------
+# Load Global CSS
+# --------------------------------------------------
 
 theme = st.session_state.get("theme", "Light")
 
 # Common CSS
->>>>>>> 0fd3a6e9cdbe350c9cf21c564cbc082a3a0a7de2
 with open("assets/css/common.css") as f:
+    st.markdown(
+        f"<style>{f.read()}</style>",
+        unsafe_allow_html=True,
+    )
+
+# Theme CSS
+css_file = "assets/css/dark.css" if theme == "Dark" else "assets/css/light.css"
+
+with open(css_file) as f:
     st.markdown(
         f"<style>{f.read()}</style>",
         unsafe_allow_html=True,
@@ -65,7 +65,6 @@ if "user" not in st.session_state:
 if "current_page" not in st.session_state:
     st.session_state.current_page = "Dashboard"
 
-# Authentication page state
 if "auth_page" not in st.session_state:
     st.session_state.auth_page = "login"
 
@@ -74,11 +73,9 @@ if "auth_page" not in st.session_state:
 # --------------------------------------------------
 
 if "verify" in st.query_params:
-
     from views.verify_email import show_verify_page
 
     show_verify_page()
-
     st.stop()
 
 # --------------------------------------------------
@@ -86,11 +83,9 @@ if "verify" in st.query_params:
 # --------------------------------------------------
 
 if "reset" in st.query_params:
-
     from views.reset_password import show_reset_password
 
     show_reset_password()
-
     st.stop()
 
 # --------------------------------------------------
@@ -100,13 +95,11 @@ if "reset" in st.query_params:
 if not st.session_state.logged_in:
 
     if st.session_state.auth_page == "forgot_password":
-
         from views.forgot_password import show_forgot_password
 
         show_forgot_password()
 
     else:
-
         from views.auth import show_auth
 
         show_auth()
@@ -117,17 +110,6 @@ if not st.session_state.logged_in:
 # Sidebar
 # --------------------------------------------------
 
-<<<<<<< HEAD
-=======
-# Theme CSS
-css_file = "assets/css/dark.css" if theme == "Dark" else "assets/css/light.css"
-
-with open(css_file) as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-# -----------------------------------
-# Imports
-# -----------------------------------
->>>>>>> 0fd3a6e9cdbe350c9cf21c564cbc082a3a0a7de2
 from components.sidebar import show_sidebar
 
 show_sidebar()
