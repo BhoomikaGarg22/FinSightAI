@@ -2,12 +2,11 @@ import base64
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-
+import plotly.graph_objects as go
 
 from utils.navigation import navigate
 from data.companies import companies
-from data.charts import get_chart_data
-
+import yfinance as yf
 
 def get_base64_image(image_path):
     with open(image_path, "rb") as img:
@@ -19,6 +18,33 @@ COMPANY_LOGO_MAP = {
     "Tesla": "assets/images/Tesla_Logo.png",
     "NVIDIA": "assets/images/Nvidia_Logo.png",
     "Microsoft": "assets/images/Microsoft_Logo.png",
+}
+def get_stock_history(ticker):
+    try:
+        df = yf.download(
+            ticker,
+            period="6mo",
+            interval="1d",
+            progress=False
+        )
+        if df.empty:
+            return None
+        df = df.reset_index()
+        df = df[["Date", "Close"]]
+
+        df.columns = ["Date", "Price"]
+
+        return df
+
+    except Exception as e:
+        print(e)
+        return None
+
+COMPANY_TICKERS = {
+    "Apple": "AAPL",
+    "Tesla": "TSLA",
+    "Microsoft": "MSFT",
+    "NVIDIA": "NVDA"
 }
 
 
@@ -122,7 +148,7 @@ def show_dashboard():
             else:
                 st.warning("Please select a company first.")
 
-    company = st.session_state.get("company")
+    company = st.session_state.get("company", None)
 
     company_data = companies.get(
         company,
@@ -182,6 +208,7 @@ def show_dashboard():
     with left:
 
         with st.container(border=True):
+<<<<<<< HEAD
             
             st.subheader("Market Overview")
 
@@ -239,8 +266,88 @@ def show_dashboard():
         xanchor="center"
     )
 )
+=======
 
-            st.plotly_chart(fig, use_container_width=True)
+            # If a company is selected
+            if company:
+
+                st.subheader(f"{company} Stock Price")
+
+                ticker = COMPANY_TICKERS.get(company)
+
+                df = get_stock_history(ticker)
+
+                if df is not None:
+
+                    fig = go.Figure()
+
+                    fig.add_trace(
+                        go.Scatter(
+                            x=df["Date"],
+                            y=df["Price"],
+                            mode="lines",
+                            name=company,
+                            line=dict(
+                                width=3,
+                                color="#4F46E5"
+                            )
+                        )
+                    )
+
+                else:
+
+                    st.error("Unable to fetch stock data.")
+                    fig = None
+
+            else:
+ 
+                st.subheader("Market Overview")
+
+                fig = go.Figure()
+
+                colors = {
+                    "Apple": "#4F46E5",
+                    "Tesla": "#EF4444",
+                    "Microsoft": "#10B981",
+                    "NVIDIA": "#F59E0B",
+                }
+
+                for name, ticker in COMPANY_TICKERS.items():
+
+                    stock_df = get_stock_history(ticker)
+
+                    if stock_df is None:
+                        continue
+
+                    fig.add_trace(
+                        go.Scatter(
+                            x=stock_df["Date"],
+                            y=stock_df["Price"],
+                            mode="lines",
+                            name=name,
+                            line=dict(
+                                width=3,
+                                color=colors[name]
+                            )
+                        )
+                    )
+
+            if fig is not None:
+
+                fig.update_layout(
+                    template="plotly_white",
+                    height=500,
+                    hovermode="x unified",
+                    xaxis_title="Date",
+                    yaxis_title="Stock Price ($)",
+                    legend_title="Companies"
+                )
+>>>>>>> 0fd3a6e9cdbe350c9cf21c564cbc082a3a0a7de2
+
+                st.plotly_chart(
+                    fig,
+                    use_container_width=True
+                )
 
     with right:
 
@@ -266,20 +373,21 @@ def show_dashboard():
             })
 
             pie = px.pie(
-             sector_df,
-             names="Sector",
-             values="Allocation",
-             hole=.65,
-             color_discrete_sequence=[
-             "#4F46E5",
-             "#10B981",
-             "#F59E0B",
-             "#EF4444",
-             "#8B5CF6"
-             ]
+                sector_df,
+                names="Sector",
+                values="Allocation",
+                hole=0.65,
+                color_discrete_sequence=[
+                    "#4F46E5",
+                    "#10B981",
+                    "#F59E0B",
+                    "#EF4444",
+                    "#8B5CF6"
+                ]
             )
 
             pie.update_layout(
+<<<<<<< HEAD
     template="plotly_white",
     height=500,
     paper_bgcolor="rgba(0,0,0,0)",
@@ -327,6 +435,28 @@ def show_dashboard():
 
     hovertemplate="<b>%{label}</b><br>%{value}%<extra></extra>"
 )
+=======
+                template="plotly_white",
+                height=420,
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                margin=dict(l=10, r=10, t=20, b=20),
+                legend=dict(
+                    orientation="h",
+                    y=-0.15
+                )
+            )
+
+            pie.update_traces(
+                textinfo="percent",
+                marker=dict(
+                    line=dict(
+                        color="white",
+                        width=2
+                    )
+                )
+            )
+>>>>>>> 0fd3a6e9cdbe350c9cf21c564cbc082a3a0a7de2
 
             st.plotly_chart(
                 pie,

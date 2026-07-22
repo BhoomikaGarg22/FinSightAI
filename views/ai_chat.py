@@ -77,6 +77,7 @@ def show_ai_chat():
         else:
             st.info("No previous chats.")
 
+<<<<<<< HEAD
         if st.button(
             "🗑 Clear History",
             width="stretch",
@@ -86,6 +87,20 @@ def show_ai_chat():
             )
 
             st.success("History cleared.")
+=======
+    st.write("")
+    
+     # =====================================================
+    # REPORT CONTEXT
+    # =====================================================
+
+    if st.session_state.get("report_uploaded", False):
+        st.success("Financial report loaded successfully.")
+        st.info("Your uploaded report is available for questions.")
+    # =====================================================
+    # CHAT WINDOW
+    # =====================================================
+>>>>>>> 0fd3a6e9cdbe350c9cf21c564cbc082a3a0a7de2
 
             st.rerun()
 
@@ -157,7 +172,14 @@ def show_ai_chat():
             "Analyze Stock",
             width="stretch",
         ):
+<<<<<<< HEAD
             navigate("Stock Analysis")
+=======
+            navigate(
+             "Stock Analysis",
+              company=st.session_state.get("company")
+            )
+>>>>>>> 0fd3a6e9cdbe350c9cf21c564cbc082a3a0a7de2
 
     with c2:
 

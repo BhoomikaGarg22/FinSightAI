@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 from data.companies import companies
 from utils.navigation import navigate
+from backend.api import chat_with_ai
 def show_watchlist():
 
     st.markdown("""
@@ -174,7 +175,24 @@ def show_watchlist():
          use_container_width=True
         ):
 
-         st.info("AI analysis coming soon.")
+         with st.spinner("Analyzing watchlist..."):
+
+            companies_text = ", ".join(st.session_state.watchlist)
+
+            prompt = f"""
+        Analyze this watchlist:
+
+        {companies_text}
+
+        Provide:
+
+        - Summary
+        - Risks
+        - Opportunities
+        - Recommendation
+        """
+
+            st.session_state.watchlist_analysis = chat_with_ai(prompt)
 
     with b3:
 

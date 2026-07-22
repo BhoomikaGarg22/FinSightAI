@@ -1,0 +1,732 @@
+/* ===========================================
+   FinSight AI - Modern Light Theme
+=========================================== */
+
+/* Hide Streamlit UI */
+
+#MainMenu,
+footer {
+    visibility: hidden;
+}
+
+header {
+    background: transparent;
+}
+
+/* ===========================================
+   Main Layout
+=========================================== */
+
+.stApp{
+    background:#0b1120;
+    color:white;
+}
+
+.block-container {
+    max-width: 1450px;
+    padding: 2rem 2.5rem;
+}
+
+/* ===========================================
+   Sidebar
+=========================================== */
+
+section[data-testid="stSidebar"] {
+    background: #0f1728;
+    border-right: 1px solid #243146;
+}
+section[data-testid="stSidebar"] label{
+    color:white !important;
+}
+section[data-testid="stSidebar"] span{
+    color:white !important;
+}
+
+section[data-testid="stSidebar"] * {
+    color: #1F2937;
+}
+
+/* ===========================================
+   Typography
+=========================================== */
+
+h1 {
+    color: white;
+    font-weight: 700;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: white;
+    font-weight: 600;
+}
+
+p,
+label,
+span,
+div[data-testid="stMarkdownContainer"] p,
+div[data-testid="stCaptionContainer"] p {
+    color: #9ca3af !important;
+}
+
+/* ===========================================
+   Inputs
+=========================================== */
+
+.stTextInput input {
+
+    background:#1b2436 !important;
+    color:white !important;
+
+    border: 1px solid #D1D5DB;
+
+    border-radius: 10px;
+
+    padding: .65rem;
+}
+
+.stTextInput input:focus {
+
+    border: 1px solid #4F46E5;
+
+    box-shadow: 0 0 0 2px rgba(79,70,229,.15);
+}
+
+/* ===========================================
+   Buttons
+=========================================== */
+
+.stButton > button {
+    width: 100%;
+    height: 44px;
+
+    background: #2f5bff !important;
+    color: white !important;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    transition: all 0.25s ease;
+}
+
+.stButton > button:hover {
+    background: #4a70ff !important;
+    color: #FFFFFF !important;
+
+    transform: translateY(-2px);
+}
+
+.stButton > button:active {
+    background: #3730A3 !important;
+    color: #FFFFFF !important;
+}
+
+.stButton > button p,
+.stButton > button span,
+.stButton > button div {
+    color: #FFFFFF !important;
+}
+
+/* ===========================================
+   Streamlit Containers
+=========================================== */
+
+div[data-testid="stVerticalBlockBorderWrapper"]{
+
+    border:1px solid #243146;
+
+    border-radius:16px;
+
+    background:#121b2e;
+
+    box-shadow:0 2px 10px rgba(0,0,0,.04);
+
+    padding:18px;
+
+}
+
+/* ===========================================
+   Metric Cards
+=========================================== */
+
+div[data-testid="metric-container"]{
+
+    border:1px solid #243146;
+
+    border-radius:15px;
+
+    background:#121b2e;
+
+    padding:16px;
+
+    box-shadow:none;
+}
+
+div[data-testid="metric-container"]:hover{
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+/* ===========================================
+   Alerts
+=========================================== */
+
+div[data-testid="stAlert"]{
+
+    border-radius:12px;
+}
+
+/* ===========================================
+   Plotly
+=========================================== */
+
+.js-plotly-plot{
+
+    border-radius:14px;
+
+    overflow:hidden;
+}
+
+/* ===========================================
+   Divider
+=========================================== */
+
+hr{
+
+    border:none;
+
+    border-top:1px solid #E5E7EB;
+}
+
+/* ===========================================
+   Smooth Animations
+=========================================== */
+
+*{
+
+    transition:.2s ease;
+}
+
+/* ==========================================
+   KPI Cards
+========================================== */
+
+.kpi-card{
+
+    background:#FFFFFF;
+
+    border:1px solid #E5E7EB;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    transition:.25s;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.04);
+
+    min-height:170px;
+
+}
+
+.kpi-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 14px 28px rgba(79,70,229,.12);
+
+}
+
+.kpi-top{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:18px;
+
+}
+
+.kpi-icon{
+
+    font-size:28px;
+
+}
+
+.kpi-title{
+
+    font-size:16px;
+
+    font-weight:600;
+
+    color:#64748B;
+
+}
+
+.kpi-value{
+
+    font-size:42px;
+
+    font-weight:700;
+
+    color:#111827;
+
+    margin-bottom:18px;
+
+}
+
+.kpi-badge{
+
+    display:inline-block;
+
+    padding:6px 14px;
+
+    border-radius:999px;
+
+    color:white;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================
+   Trending Stocks
+========================================== */
+
+.stock-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px;
+
+    border:1px solid #E5E7EB;
+
+    border-radius:14px;
+
+    margin-bottom:14px;
+
+    background:white;
+
+    transition:.25s;
+
+}
+
+.stock-card:hover{
+
+    transform:translateX(6px);
+
+    box-shadow:0 8px 18px rgba(79,70,229,.10);
+
+}
+
+.stock-name{
+
+    font-size:17px;
+
+    font-weight:600;
+
+    color:#111827;
+
+}
+
+.stock-price{
+
+    color:#64748B;
+
+    margin-top:5px;
+
+}
+
+.stock-change{
+
+    background:#DCFCE7;
+
+    color:#16A34A;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================
+   News Cards
+========================================== */
+
+.news-card{
+
+    padding:18px;
+
+    border:1px solid #E5E7EB;
+
+    border-radius:14px;
+
+    margin-bottom:16px;
+
+    background:white;
+
+    transition:.25s;
+
+}
+
+.news-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 10px 24px rgba(79,70,229,.10);
+
+}
+
+.news-title{
+
+    font-size:17px;
+
+    font-weight:600;
+
+    color:#111827;
+
+    margin-bottom:14px;
+
+}
+
+.news-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+}
+
+.news-category{
+
+    background:#EEF2FF;
+
+    color:#4F46E5;
+
+    padding:5px 12px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.news-time{
+
+    color:#6B7280;
+
+    font-size:13px;
+
+}
+
+.news-sentiment{
+
+    padding:5px 12px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================
+   AI Recommendation Card
+========================================== */
+
+.ai-card{
+
+    background:linear-gradient(135deg,#EEF2FF,#FFFFFF);
+
+    border-radius:18px;
+
+    padding:24px;
+
+    border:1px solid #E5E7EB;
+
+}
+
+.ai-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+}
+
+.ai-header h3{
+
+    color:#16A34A;
+
+    margin:0;
+
+    font-size:28px;
+
+}
+
+.ai-header p{
+
+    margin-top:8px;
+
+    color:#64748B;
+
+}
+
+.confidence-circle{
+
+    width:80px;
+    height:80px;
+
+    border-radius:50%;
+
+    background:#4F46E5;
+
+    color:#FFFFFF !important;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:24px;
+
+    font-weight:700;
+
+    line-height:80px;
+
+    text-align:center;
+
+    flex-shrink:0;
+
+    box-shadow:0 8px 20px rgba(79,70,229,.25);
+}
+
+.confidence-circle *{
+    color:#FFFFFF !important;
+}
+
+.ai-card h4{
+
+    margin-top:18px;
+
+    color:#111827;
+
+}
+
+.ai-card ul{
+
+    padding-left:20px;
+
+}
+
+.ai-card li{
+
+    margin-bottom:8px;
+
+    color:#374151;
+
+}
+
+.generated-time{
+
+    margin-top:18px;
+
+    color:#9CA3AF;
+
+    font-size:13px;
+
+}
+
+/* ==========================================
+   Page Header
+========================================== */
+
+.page-header{
+
+    margin-bottom:28px;
+
+}
+
+.page-header h1{
+
+    font-size:42px;
+
+    margin-bottom:8px;
+
+}
+
+.page-header p{
+
+    color:#64748B;
+
+    font-size:17px;
+
+    margin-bottom:18px;
+
+}
+
+.market-status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    background:#ECFDF5;
+
+    color:#065F46;
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.status-dot{
+
+    width:10px;
+
+    height:10px;
+
+    background:#10B981;
+
+    border-radius:50%;
+
+    animation:pulse 1.8s infinite;
+
+}
+
+@keyframes pulse{
+
+    0%{
+
+        box-shadow:0 0 0 0 rgba(16,185,129,.6);
+
+    }
+
+    70%{
+
+        box-shadow:0 0 0 10px rgba(16,185,129,0);
+
+    }
+
+    100%{
+
+        box-shadow:0 0 0 0 rgba(16,185,129,0);
+
+    }
+
+}
+
+/* ==========================================
+   Hide Image Fullscreen Button
+========================================== */
+
+button[data-testid="StyledFullScreenButton"]{
+    display:none !important;
+}
+
+/* Older Streamlit versions */
+
+[data-testid="stImage"] button{
+    display:none !important;
+}
+
+/* Hide image fullscreen button */
+
+button[title="View fullscreen"]{
+    display:none !important;
+}
+
+[data-testid="StyledFullScreenButton"]{
+    display:none !important;
+}
+
+[data-testid="stImage"] button{
+    display:none !important;
+}
+
+/* ==========================================
+   Hide Streamlit Image Toolbar
+========================================== */
+
+button[data-testid="stBaseButton-elementToolbar"]{
+    display:none !important;
+}
+
+button[aria-label="Fullscreen"]{
+    display:none !important;
+}
+
+button[kind="elementToolbar"]{
+    display:none !important;
+}
+
+/* Sidebar padding */
+
+section[data-testid="stSidebar"] .block-container{
+    padding-top:0.6rem !important;
+}
+
+div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+
+}
+
+div[role="radiogroup"] > label[data-baseweb="radio"]{
+    border-radius:10px;
+    padding:10px;
+}
+
+div[role="radiogroup"] > label[data-baseweb="radio"]:has(input:checked){
+    background:#1a3cff30;
+}
+
+/* OFF toggle */
+[data-baseweb="switch"] > div:first-child{
+    background:#5b6474 !important;
+}
+
+/* White knob */
+[data-baseweb="switch"] > div:first-child > div{
+    background:white !important;
+}

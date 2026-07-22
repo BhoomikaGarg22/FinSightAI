@@ -10,10 +10,32 @@ st.set_page_config(
     layout="wide",
 )
 
+<<<<<<< HEAD
 # --------------------------------------------------
 # Load Global CSS
 # --------------------------------------------------
 
+=======
+# -----------------------------------
+# Initialize Session State
+# -----------------------------------
+
+if "theme" not in st.session_state:
+    st.session_state.theme = "Light"
+
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "Dashboard"
+# -----------------------------------
+# Load CSS
+# -----------------------------------
+# -------------------------------
+# Theme Selection
+# -------------------------------
+
+theme = st.session_state.get("theme", "Light")
+
+# Common CSS
+>>>>>>> 0fd3a6e9cdbe350c9cf21c564cbc082a3a0a7de2
 with open("assets/css/common.css") as f:
     st.markdown(
         f"<style>{f.read()}</style>",
@@ -95,6 +117,17 @@ if not st.session_state.logged_in:
 # Sidebar
 # --------------------------------------------------
 
+<<<<<<< HEAD
+=======
+# Theme CSS
+css_file = "assets/css/dark.css" if theme == "Dark" else "assets/css/light.css"
+
+with open(css_file) as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+# -----------------------------------
+# Imports
+# -----------------------------------
+>>>>>>> 0fd3a6e9cdbe350c9cf21c564cbc082a3a0a7de2
 from components.sidebar import show_sidebar
 
 show_sidebar()
