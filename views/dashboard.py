@@ -3,9 +3,9 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-
+from utils.helpers import get_company_data, set_selected_company
 from utils.navigation import navigate
-from data.companies import companies
+from data.charts import get_chart_data
 import yfinance as yf
 
 def get_base64_image(image_path):
@@ -129,8 +129,13 @@ def show_dashboard():
     left, right = st.columns([5, 1])
 
     with left:
+        
+        from utils.helpers import (
+         render_company_selector,
+         get_company_data,
+         set_selected_company,
+        )
 
-        from utils.helpers import render_company_selector
         company = render_company_selector("Search Company")
 
     with right:
@@ -138,21 +143,18 @@ def show_dashboard():
         st.write("")
         st.write("")
 
-        if st.button(
-            "Analyze",
-             use_container_width=True,
-        ):
-            if company:
-                navigate("Stock Analysis")
-                st.success(f"Analyzing {company}...")
-            else:
-                st.warning("Please select a company first.")
+        if st.button("Analyze"):
+         if company:
+          navigate("Stock Analysis")
+          st.success(f"Analyzing {company}...")
+         else:
+          st.warning("Please select a company first.")
 
 
-    company_data = companies.get(
-        company,
-        companies["Apple"]
-)
+    if not company:
+     company = "Apple"
+
+    company_data = get_company_data(company)
     st.write("")
 
     # ======================================================
@@ -206,81 +208,35 @@ def show_dashboard():
 
     with left:
 
-        with st.container(border=True):
+     with st.container(border=True):
 
-            st.subheader("Market Overview")
+        st.subheader("Market Overview")
 
-            fig = go.Figure()
+        # If Apple is the default (no user selection), show all companies.
+        selected_company = None if company == "All Companies" else company
 
-            colors = {
-                "Apple": "#4F46E5",
-                "Tesla": "#EF4444",
-                "Microsoft": "#10B981",
-                "NVIDIA": "#F59E0B",
-            }
+        chart_df = get_chart_data(selected_company)
 
-            for name, ticker in COMPANY_TICKERS.items():
+        fig = px.line(
+         chart_df,
+         x="Date",
+         y="Price",
+         color="Company",
+         markers=True,
+         title="Market Overview"
+         if selected_company is None
+         else f"{selected_company} Stock Price"
+        )
 
-                df = get_stock_history(ticker)
+        fig.update_layout(
+         template="plotly_white",
+         height=500,
+         hovermode="x unified",
+         paper_bgcolor="rgba(0,0,0,0)",
+         plot_bgcolor="rgba(0,0,0,0)",
+        )
 
-                if df is None or df.empty:
-                    continue
-
-                fig.add_trace(
-                    go.Scatter(
-                        x=df["Date"],
-                        y=df["Price"],
-                        mode="lines",
-                        name=name,
-                        line=dict(
-                            width=3,
-                            color=colors[name]
-                        )
-                    )
-                )
-
-            fig.update_layout(
-
-                template="plotly_white",
-
-                height=500,
-
-                hovermode="x unified",
-
-                paper_bgcolor="white",
-
-                plot_bgcolor="white",
-
-                margin=dict(
-                    l=20,
-                    r=20,
-                    t=20,
-                    b=20
-                ),
-
-                xaxis=dict(
-                    title="Date",
-                    showgrid=False
-                ),
-
-                yaxis=dict(
-                    title="Stock Price ($)",
-                    showgrid=True,
-                    gridcolor="#ECECEC"
-                ),
-
-                legend=dict(
-                    orientation="h",
-                    y=1.05,
-                    x=0
-                )
-            )
-
-            st.plotly_chart(
-                fig,
-                use_container_width=True
-            )
-
+        st.plotly_chart(fig, use_container_width=True)
     with right:
 
         with st.container(border=True):

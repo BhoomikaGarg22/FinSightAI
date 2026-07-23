@@ -8,18 +8,23 @@ COMPANY_TICKERS = {
     "NVIDIA": "NVDA",
 }
 
-
-def get_chart_data():
+def get_chart_data(company=None):
 
     frames = []
 
-    for company, ticker in COMPANY_TICKERS.items():
+    companies = (
+        {company: COMPANY_TICKERS[company]}
+        if company and company in COMPANY_TICKERS
+        else COMPANY_TICKERS
+    )
+
+    for company_name, ticker in companies.items():
 
         try:
 
             df = yf.download(
                 ticker,
-                period="6mo",
+                period="30d",
                 interval="1d",
                 auto_adjust=True,
                 progress=False,
@@ -28,18 +33,21 @@ def get_chart_data():
             if df.empty:
                 continue
 
-            # Handle MultiIndex columns if present
             if isinstance(df.columns, pd.MultiIndex):
                 df.columns = df.columns.get_level_values(0)
 
-            df = df.reset_index()[["Date", "Close"]]
+            df = df.reset_index()
+
+            df = df[["Date", "Close"]]
+
             df.rename(columns={"Close": "Price"}, inplace=True)
-            df["Company"] = company
+
+            df["Company"] = company_name
 
             frames.append(df)
 
         except Exception as e:
-            print(f"{company}: {e}")
+            print(e)
 
     if not frames:
         return pd.DataFrame(columns=["Date", "Price", "Company"])

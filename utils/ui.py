@@ -7,12 +7,14 @@ def page_header(title: str, subtitle: str = ""):
         <div style="
             padding:22px;
             border-radius:16px;
-            border:1px solid #2d3748;
-            background-color:#111827;
+            border:1px solid #E5E7EB;
+            background:#F8FAFC;
             margin-bottom:20px;
         ">
-            <h2 style="margin-bottom:6px;">{title}</h2>
-            <p style="color:#9CA3AF;margin:0;">
+            <h2 style="margin-bottom:6px;color:#111827;">
+                {title}
+            </h2>
+            <p style="color:#6B7280;margin:0;">
                 {subtitle}
             </p>
         </div>

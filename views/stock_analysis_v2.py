@@ -8,7 +8,12 @@ from components.ui_components import (
     metric_card,
     recommendation_card,
 )
-
+from utils.helpers import (
+    render_company_selector,
+    get_selected_company,
+    get_company_data,
+    set_selected_company,
+)
 
 def get_base64_image(image_path):
     with open(image_path, "rb") as img:
@@ -22,16 +27,6 @@ COMPANY_LOGO_MAP = {
     "Microsoft": "assets/images/Microsoft_Logo.png",
 }
 
-from utils.helpers import (
-    get_selected_company,
-    set_selected_company,
-    get_company_data,
-)
-
-from components.ui_components import (
-    section_title,
-    metric_card,
-)
 from data.charts import get_chart_data
 
 def show_stock_analysis_v2():
@@ -201,26 +196,18 @@ def show_stock_analysis_v2():
      chart_df,
      x="Date",
      y="Price",
-     markers=True
-)
+     markers=True,
+     title=f"{company} - Last 30 Days"
+    )
 
     fig.update_layout(
      template="plotly_dark",
      height=450,
      paper_bgcolor="rgba(0,0,0,0)",
      plot_bgcolor="rgba(0,0,0,0)",
-     margin=dict(
-        l=20,
-        r=20,
-        t=20,
-        b=20
     )
-)
 
-    st.plotly_chart(
-     fig,
-     use_container_width=True
-)
+    st.plotly_chart(fig, use_container_width=True)
     
     st.divider()
 

@@ -51,11 +51,10 @@ def set_selected_company(company):
 def get_company_data(company):
     """Return company information."""
 
-    if company == "All Companies":
-        company = "Apple"
+    if company in (None, "", "All Companies"):
+        return companies["Apple"]   # Default KPI cards
 
     return companies.get(company, companies["Apple"])
-
 
 def get_company_news(company):
     """Return company news."""

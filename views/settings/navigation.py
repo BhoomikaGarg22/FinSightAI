@@ -28,7 +28,7 @@ ICONS = {
 
 def render_navigation():
 
-    st.markdown("## ⚙️ Settings")
+    st.markdown("## ⚙️ Preferences")
 
     for page in SECTIONS:
 
