@@ -1,5 +1,7 @@
 import streamlit as st
-
+import extra_streamlit_components as stx
+from backend.services.session_service import get_session_user_id
+from backend.services.auth_service import get_user_by_id
 # --------------------------------------------------
 # Page Configuration
 # --------------------------------------------------
@@ -62,6 +64,33 @@ if "logged_in" not in st.session_state:
 if "user" not in st.session_state:
     st.session_state.user = None
 
+cookie_manager = stx.CookieManager(key="finsight_auth_cookie")
+
+import time
+
+if not st.session_state.get("cookie_checked", False):
+    time.sleep(1)
+    st.session_state.cookie_checked = True
+    st.rerun()
+
+if not st.session_state.logged_in:
+    session_token = cookie_manager.get("finsight_session")
+    from backend.services.session_service import debug_session_lookup
+
+    st.write("Session diagnostic:", debug_session_lookup(session_token))
+    st.write("Cookie found:", bool(session_token))
+
+    if session_token:
+        user_id = get_session_user_id(session_token)
+        st.write("Session user ID:", user_id)
+
+        if user_id:
+            user = get_user_by_id(user_id)
+
+            if user:
+                st.session_state.logged_in = True
+                st.session_state.user = user
+                st.session_state.profile = user.get("profile", {})
 if "current_page" not in st.session_state:
     st.session_state.current_page = "Dashboard"
 
@@ -102,7 +131,7 @@ if not st.session_state.logged_in:
     else:
         from views.auth import show_auth
 
-        show_auth()
+        show_auth(cookie_manager)
 
     st.stop()
 
@@ -112,7 +141,7 @@ if not st.session_state.logged_in:
 
 from components.sidebar import show_sidebar
 
-show_sidebar()
+show_sidebar(cookie_manager)
 
 # --------------------------------------------------
 # Routing

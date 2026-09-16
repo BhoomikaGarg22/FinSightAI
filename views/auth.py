@@ -1,11 +1,12 @@
 import streamlit as st
-
+import extra_streamlit_components as stx
+from backend.services.session_service import create_session
 from backend.services.auth_service import (
     create_user,
     login_user,
     resend_verification_email,
 )
-
+from datetime import datetime, timedelta
 
 # =====================================================
 # Session State
@@ -33,7 +34,7 @@ def initialize_auth_state():
 # Authentication Page
 # =====================================================
 
-def show_auth():
+def show_auth(cookie_manager):
 
     initialize_auth_state()
 
@@ -114,16 +115,22 @@ def show_auth():
                         )
 
                     if success:
+    # Create a server-side login session
+                      session_token = create_session(result["id"])
 
-                        st.session_state.logged_in = True
+    # Store the session token in the browser cookie
+                      cookie_manager.set(
+                      "finsight_session",
+                      session_token,
+                      expires_at=datetime.now() + timedelta(days=7),
+                      )
 
-                        # Store the complete user object
-                        st.session_state.user = result
+    # Store the complete user object
+                      st.session_state.logged_in = True
+                      st.session_state.user = result
+                      st.session_state.profile = result.get("profile", {})
 
-                        # Store profile separately
-                        st.session_state.profile = result.get("profile", {})
-
-                        st.rerun()
+                      st.rerun()
 
                     else:
 

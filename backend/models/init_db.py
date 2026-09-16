@@ -6,6 +6,7 @@ from backend.db import get_connection, DB_PATH
 # ==================================================
 
 USER_PROFILE_COLUMNS = {
+    "display_name": "TEXT DEFAULT ''",
     "phone": "TEXT",
     "country": "TEXT DEFAULT 'India'",
     "occupation": "TEXT DEFAULT 'Student'",
@@ -119,6 +120,17 @@ def create_tables():
         )
     """)
 
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS user_sessions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            token_hash TEXT NOT NULL UNIQUE,
+            expires_at TEXT NOT NULL,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        )
+    """)
+
     # ==================================================
     # Chats
     # ==================================================
@@ -198,6 +210,8 @@ def create_tables():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
 
             user_id INTEGER NOT NULL UNIQUE,
+
+            display_name TEXT DEFAULT '',
 
             phone TEXT,
 

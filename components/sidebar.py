@@ -1,6 +1,6 @@
 import streamlit as st
 import base64
-
+from backend.services.session_service import delete_session
 
 # -------------------------------------------------------
 # Helper
@@ -15,7 +15,7 @@ def get_base64_image(image_path):
 # Sidebar
 # -------------------------------------------------------
 
-def show_sidebar():
+def show_sidebar(cookie_manager):
 
     with st.sidebar:
 
@@ -137,15 +137,26 @@ margin-top:4px;
 
         st.markdown("<hr>", unsafe_allow_html=True)
 
-        # ==========================================
-        # Logout
-        # ==========================================
+       # ==========================================
+# Logout
+# ==========================================
 
         if st.button(
             "🚪 Logout",
             use_container_width=True,
         ):
 
+    # Get the active session token
+            session_token = cookie_manager.get("finsight_session")
+
+    # Delete the session from the database
+            if session_token:
+                delete_session(session_token)
+
+    # Remove the browser cookie
+            cookie_manager.delete("finsight_session")
+
+     # Clear Streamlit login state
             st.session_state.logged_in = False
             st.session_state.user = None
 

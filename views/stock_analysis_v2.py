@@ -27,7 +27,12 @@ COMPANY_LOGO_MAP = {
     "Microsoft": "assets/images/Microsoft_Logo.png",
 }
 
-from data.charts import get_chart_data
+from data.charts import (
+    get_chart_data,
+    get_latest_stock_price,
+    get_live_company_stats,
+    get_technical_indicators,
+)
 
 def show_stock_analysis_v2():
 
@@ -84,6 +89,8 @@ def show_stock_analysis_v2():
 
     company = get_selected_company()
     company_data = get_company_data(company)
+    live_stats = get_live_company_stats(company)
+    technical = get_technical_indicators(company)
 
     st.divider()
 
@@ -132,19 +139,19 @@ def show_stock_analysis_v2():
         st.markdown("### Company Statistics")
 
         st.metric(
-            "Market Cap",
-            company_data["market_cap"]
-        )
+        "Market Cap",
+        live_stats.get("market_cap", "Unavailable")
+    )
 
         st.metric(
-            "P/E Ratio",
-            company_data["pe_ratio"]
-        )
+        "P/E Ratio",
+        live_stats.get("pe_ratio", "Unavailable")
+    )
 
         st.metric(
-            "52 Week High",
-            company_data["high_52"]
-        )
+        "52 Week High",
+        live_stats.get("high_52", "Unavailable")
+    )
 
         st.metric(
             "Trend",
@@ -161,12 +168,27 @@ def show_stock_analysis_v2():
 
     c1, c2, c3, c4 = st.columns(4)
 
+    
     with c1:
-     metric_card(
-        "Current Price",
-        company_data["price"],
-        "+2.14%"
-    )
+        latest_price, price_change = get_latest_stock_price(company)
+
+        if latest_price is not None:
+            delta = (
+                f"{price_change:+.2f}%"
+                if price_change is not None
+                else None
+            )
+
+            metric_card(
+                "Latest Available Price",
+                f"${latest_price:,.2f}",
+                delta
+            )
+        else:
+            metric_card(
+                "Latest Available Price",
+                "Unavailable"
+            )
 
     with c2:
      metric_card(
@@ -217,20 +239,20 @@ def show_stock_analysis_v2():
 
     with c1:
         metric_card(
-            "RSI",
-            company_data["rsi"]
+            "RSI (14-day)",
+            technical.get("rsi", "Unavailable")
         )
 
     with c2:
         metric_card(
-            "Moving Average",
-            company_data["moving_average"]
+            "RSI (14-day)",
+            technical.get("rsi", "Unavailable")
         )
 
     with c3:
         metric_card(
             "MACD",
-            company_data["macd"]
+            technical.get("macd", "Unavailable")
         )
 
     st.divider()

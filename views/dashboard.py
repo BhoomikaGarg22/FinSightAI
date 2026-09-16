@@ -5,7 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from utils.helpers import get_company_data, set_selected_company
 from utils.navigation import navigate
-from data.charts import get_chart_data
+from data.charts import get_chart_data, get_latest_stock_price
 import yfinance as yf
 
 def get_base64_image(image_path):
@@ -339,45 +339,55 @@ def show_dashboard():
 
         with st.container(border=True):
 
+            
             st.subheader("Trending Stocks")
 
-            stocks = [
-             ("Apple", "$189.42", "+2.4%"),
-             ("NVIDIA", "$134.15", "+4.8%"),
-             ("Tesla", "$252.61", "+1.6%"),
-             ("Microsoft", "$442.18", "+2.1%")
-            ]
+            stocks = []
 
+            # Fetch data for each company once
+            for name in COMPANY_TICKERS:
+                price, change = get_latest_stock_price(name)
+
+                if price is not None:
+                    price_text = f"${price:,.2f}"
+                    change_text = (
+                        f"{change:+.2f}%"
+                        if change is not None
+                        else "Change unavailable"
+                    )
+                else:
+                    price_text = "Unavailable"
+                    change_text = ""
+
+                stocks.append((name, price_text, change_text))
+
+            # Display each company once
             for name, price, change in stocks:
 
-             logo_path = COMPANY_LOGO_MAP.get(name, "assets/images/icon_logo.png")
-             logo_b64 = get_base64_image(logo_path)
+                logo_path = COMPANY_LOGO_MAP.get(
+                    name,
+                    "assets/images/icon_logo.png"
+                )
+                logo_b64 = get_base64_image(logo_path)
 
-             st.markdown(
-              f"""
-            <div class="stock-card">
-
-            <div class="stock-left" style="display:flex; align-items:center; gap:12px;">
-
-            <img src="data:image/png;base64,{logo_b64}" style="width:34px; height:34px; object-fit:contain; border-radius:8px;">
-
-            <div>
-                <div class="stock-name">{name}</div>
-                <div class="stock-price">{price}</div>
-            </div>
-
-            </div>
-
-            <div class="stock-right">
-
-            <span class="stock-change">{change}</span>
-
-            </div>
-
-            </div>
-            """,
-                unsafe_allow_html=True
-               )
+                st.markdown(
+                    f"""
+                    <div class="stock-card">
+                        <div class="stock-left" style="display:flex; align-items:center; gap:12px;">
+                            <img src="data:image/png;base64,{logo_b64}"
+                                 style="width:34px; height:34px; object-fit:contain; border-radius:8px;">
+                            <div>
+                                <div class="stock-name">{name}</div>
+                                <div class="stock-price">{price}</div>
+                            </div>
+                        </div>
+                        <div class="stock-right">
+                            <span class="stock-change">{change}</span>
+                        </div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
 
     with right:
 

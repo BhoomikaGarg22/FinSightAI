@@ -77,7 +77,7 @@ def create_user_profile(user_id: int):
         INSERT OR IGNORE INTO user_profiles (
 
             user_id,
-
+            display_name,
             phone,
             country,
             occupation,
@@ -109,7 +109,7 @@ def create_user_profile(user_id: int):
 
         VALUES (
 
-            ?, ?, ?, ?,
+            ?, ?, ?, ?, ?
 
             ?, ?, ?, ?,
 
@@ -127,7 +127,7 @@ def create_user_profile(user_id: int):
         """,
         (
             user_id,
-
+            profile["display_name"],
             profile["phone"],
             profile["country"],
             profile["occupation"],
@@ -219,6 +219,35 @@ def get_user_profile(user_id: int):
 
     return profile
 
+def get_user_by_id(user_id):
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "SELECT * FROM users WHERE id = ?",
+            (user_id,),
+        )
+
+        user = cursor.fetchone()
+        conn.close()
+
+        if not user:
+            return None
+
+        profile = get_user_profile(user_id) or {}
+
+        display_name = profile.get("display_name") or user["name"] or ""
+
+        return {
+            "id": user["id"],
+            "username": display_name,
+            "name": user["name"],
+            "display_name": display_name,
+            "email": user["email"],
+            "created_at": user["created_at"],
+            "is_verified": bool(user["is_verified"]),
+            "profile": profile,
+        }
 
 # =====================================================
 # Update User Profile
@@ -241,7 +270,7 @@ def update_user_profile(user_id: int, settings: dict):
         UPDATE user_profiles
 
         SET
-
+            display_name=?,
             phone=?,
             country=?,
             occupation=?,
@@ -274,6 +303,7 @@ def update_user_profile(user_id: int, settings: dict):
         WHERE user_id=?
         """,
         (
+            profile["display_name"],
             profile["phone"],
             profile["country"],
             profile["occupation"],
@@ -539,9 +569,17 @@ def login_user(email: str, password: str):
         create_user_profile(user["id"])
         profile = get_user_profile(user["id"])
 
+    display_name = (
+    profile.get("display_name")
+    or user.get("name")
+    or ""
+)
+
     logged_in_user = {
         "id": user["id"],
-        "username": user.get("username", ""),
+        "username": display_name,
+        "name": user.get("name", ""),
+        "display_name": display_name,
         "email": user.get("email", ""),
         "created_at": user.get("created_at"),
         "is_verified": bool(user.get("is_verified", False)),
