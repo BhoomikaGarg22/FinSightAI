@@ -86,34 +86,3 @@ def delete_session(token):
 
     conn.commit()
     conn.close()
-
-def debug_session_lookup(token):
-    if not token:
-        return {
-            "cookie_received": False,
-            "matching_session": False,
-        }
-
-    token_hash = hashlib.sha256(token.encode()).hexdigest()
-
-    conn = get_connection()
-    cursor = conn.cursor()
-
-    cursor.execute(
-        """
-        SELECT id, user_id, expires_at
-        FROM user_sessions
-        WHERE token_hash = ?
-        """,
-        (token_hash,),
-    )
-
-    row = cursor.fetchone()
-    conn.close()
-
-    return {
-        "cookie_received": True,
-        "matching_session": row is not None,
-        "session_id": row["id"] if row else None,
-        "user_id": row["user_id"] if row else None,
-    }

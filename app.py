@@ -75,14 +75,9 @@ if not st.session_state.get("cookie_checked", False):
 
 if not st.session_state.logged_in:
     session_token = cookie_manager.get("finsight_session")
-    from backend.services.session_service import debug_session_lookup
-
-    st.write("Session diagnostic:", debug_session_lookup(session_token))
-    st.write("Cookie found:", bool(session_token))
 
     if session_token:
         user_id = get_session_user_id(session_token)
-        st.write("Session user ID:", user_id)
 
         if user_id:
             user = get_user_by_id(user_id)
@@ -91,6 +86,7 @@ if not st.session_state.logged_in:
                 st.session_state.logged_in = True
                 st.session_state.user = user
                 st.session_state.profile = user.get("profile", {})
+
 if "current_page" not in st.session_state:
     st.session_state.current_page = "Dashboard"
 
