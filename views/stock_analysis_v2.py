@@ -2,6 +2,7 @@ import base64
 import streamlit as st
 import time
 import plotly.express as px
+import pandas as pd
 
 from components.ui_components import (
     section_title,
@@ -214,23 +215,49 @@ def show_stock_analysis_v2():
 
     chart_df = get_chart_data(company)
 
+    chart_df["Date"] = pd.to_datetime(chart_df["Date"], errors="coerce")
+    chart_df = chart_df.dropna(subset=["Date", "Price"])
+    chart_df = chart_df.sort_values(["Company", "Date"])
+
     fig = px.line(
-     chart_df,
-     x="Date",
-     y="Price",
-     markers=True,
-     title=f"{company} - Last 30 Days"
+        chart_df,
+        x="Date",
+        y="Price",
+        color="Company",
+        markers=True,
+        title=f"{company} - Last 30 Days",
+        hover_data={
+            "Date": "|%d %b %Y",
+            "Price": ":.2f",
+            "Company": True
+        }
     )
 
     fig.update_layout(
-     template="plotly_dark",
-     height=450,
-     paper_bgcolor="rgba(0,0,0,0)",
-     plot_bgcolor="rgba(0,0,0,0)",
+    template="plotly_dark",
+    height=450,
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(0,0,0,0)",
+    hovermode="closest",
     )
 
+    fig.update_traces(
+    line=dict(width=3),
+    marker=dict(size=6),
+    hovertemplate=(
+        "<b>Date:</b> %{x|%d %b %Y}<br>"
+        "<b>Price:</b> %{y:.2f}"
+        "<extra></extra>"
+    ),
+    hoverlabel=dict(
+        bgcolor="white",
+        font=dict(color="black", size=10),
+        bordercolor="gray",
+        align="left",
+        namelength=0
+    )
+    )
     st.plotly_chart(fig, use_container_width=True)
-    
     st.divider()
 
     section_title("Technical Indicators")
