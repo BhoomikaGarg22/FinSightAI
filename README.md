@@ -82,6 +82,7 @@ source .venv/bin/activate
 
 ```bash
 pip install -r requirements.txt
+python -m pip install extra-streamlit-components
 ```
 
 ---
@@ -162,3 +163,4 @@ http://localhost:8501
 ## License
 
 This project is developed for academic purposes as part of the Summer Internship Project (SIP).
+
