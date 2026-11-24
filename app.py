@@ -23,28 +23,6 @@ if "current_page" not in st.session_state:
     st.session_state.current_page = "Dashboard"
 
 # --------------------------------------------------
-# Load Global CSS
-# --------------------------------------------------
-
-theme = st.session_state.get("theme", "Light")
-
-# Common CSS
-with open("assets/css/common.css") as f:
-    st.markdown(
-        f"<style>{f.read()}</style>",
-        unsafe_allow_html=True,
-    )
-
-# Theme CSS
-css_file = "assets/css/dark.css" if theme == "Dark" else "assets/css/light.css"
-
-with open(css_file) as f:
-    st.markdown(
-        f"<style>{f.read()}</style>",
-        unsafe_allow_html=True,
-    )
-
-# --------------------------------------------------
 # Initialize Database
 # --------------------------------------------------
 
@@ -135,10 +113,40 @@ if not st.session_state.logged_in:
 # Sidebar
 # --------------------------------------------------
 
+# --------------------------------------------------
+# Initialize User Settings
+# --------------------------------------------------
+
+from utils.settings_state import initialize_settings
+
+initialize_settings()
+
+# --------------------------------------------------
+# Sidebar
+# --------------------------------------------------
+
 from components.sidebar import show_sidebar
 
 show_sidebar(cookie_manager)
+# --------------------------------------------------
+# Load Global CSS
+# --------------------------------------------------
 
+theme = st.session_state.get("theme", "Light")
+
+with open("assets/css/common.css") as f:
+    st.markdown(
+        f"<style>{f.read()}</style>",
+        unsafe_allow_html=True,
+    )
+
+css_file = "assets/css/dark.css" if theme == "Dark" else "assets/css/light.css"
+
+with open(css_file) as f:
+    st.markdown(
+        f"<style>{f.read()}</style>",
+        unsafe_allow_html=True,
+    )
 # --------------------------------------------------
 # Routing
 # --------------------------------------------------
@@ -186,3 +194,46 @@ elif current_page == "Settings":
     from views.settings_page import render_settings
 
     render_settings()
+
+# --------------------------------------------------
+# Load Global CSS Based on User Preference
+# --------------------------------------------------
+
+settings = st.session_state.get("settings", {})
+theme = settings.get("theme", "System")
+
+# Load Common CSS
+with open("assets/css/common.css", encoding="utf-8") as f:
+    common_css = f.read()
+
+# Load Light and Dark CSS
+with open("assets/css/light.css", encoding="utf-8") as f:
+    light_css = f.read()
+
+with open("assets/css/dark.css", encoding="utf-8") as f:
+    dark_css = f.read()
+
+# Select Theme
+if theme == "Dark":
+
+    selected_css = dark_css
+
+elif theme == "Light":
+
+    selected_css = light_css
+
+else:
+
+    selected_css = f"""
+    {light_css}
+
+    @media (prefers-color-scheme: dark) {{
+        {dark_css}
+    }}
+    """
+
+# Apply CSS
+st.markdown(
+    f"<style>{common_css}\n{selected_css}</style>",
+    unsafe_allow_html=True,
+)

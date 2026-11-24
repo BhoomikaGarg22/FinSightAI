@@ -31,7 +31,7 @@ PAGES = {
 
 
 def render_settings():
-
+  with st.container(key="settings-page"):
     initialize_settings()
 
     user = st.session_state.get("user", {})

@@ -135,11 +135,33 @@ margin-top:4px;
             st.session_state.current_page = mapping[selected]
             st.rerun()
 
-        st.markdown("<hr>", unsafe_allow_html=True)
+            st.markdown("<hr>", unsafe_allow_html=True)
 
-       # ==========================================
-# Logout
-# ==========================================
+                # ==========================================
+                # Theme Selection
+                # ==========================================
+
+            st.markdown("### Appearance")
+
+            selected_theme = st.radio(
+                 "Choose Theme",
+                 ["Light", "Dark"],
+                 index=["Light", "Dark"].index(
+                  st.session_state.get("theme", "Light")
+                 ),
+                 horizontal=True,
+                 label_visibility="collapsed",
+                )
+
+            if selected_theme != st.session_state.theme:
+                 st.session_state.theme = selected_theme
+                 st.rerun()
+
+            st.markdown("<hr>", unsafe_allow_html=True)
+
+        # ==========================================
+        # Logout
+        # ==========================================
 
         if st.button(
             "🚪 Logout",

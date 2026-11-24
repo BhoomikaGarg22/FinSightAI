@@ -1,5 +1,7 @@
+
 /* ===========================================
-   FinSight AI - Modern Light Theme
+   FinSight AI - Common Styles
+   Shared across Light and Dark Themes
 =========================================== */
 
 /* Hide Streamlit UI */
@@ -13,733 +15,222 @@ header {
     background: transparent;
 }
 
-/* ===========================================
-   Main Layout
-=========================================== */
-
-.stApp {
-    background: #F5F7FB;
-}
+/* Main Layout */
 
 .block-container {
     max-width: 1450px;
     padding: 2rem 2.5rem;
 }
 
-/* ===========================================
-   Sidebar
-=========================================== */
+/* Shared Card Structure */
 
-section[data-testid="stSidebar"] {
-    background: #FFFFFF;
-    border-right: 1px solid #E5E7EB;
+.kpi-card,
+.stock-card,
+.news-card,
+.ai-card {
+    border-radius: 16px;
+    transition: 0.25s ease;
 }
 
-section[data-testid="stSidebar"] * {
-    color: #1F2937;
+.kpi-card {
+    padding: 22px;
+    min-height: 170px;
 }
 
-/* ===========================================
-   Typography
-=========================================== */
+.stock-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    margin-bottom: 14px;
+}
 
-h1 {
-    color: #111827;
+.news-card {
+    padding: 18px;
+    margin-bottom: 16px;
+}
+
+.ai-card {
+    padding: 24px;
+}
+
+/* Shared Card Layout */
+
+.kpi-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.ai-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.news-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Shared Typography Structure */
+
+.kpi-icon {
+    font-size: 28px;
+}
+
+.kpi-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.kpi-value {
+    font-size: 42px;
     font-weight: 700;
+    margin-bottom: 18px;
 }
 
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color: #374151;
+.stock-name,
+.news-title {
+    font-size: 17px;
     font-weight: 600;
 }
 
-p,
-label,
-span,
-div[data-testid="stMarkdownContainer"] p,
-div[data-testid="stCaptionContainer"] p {
-    color: #111827;
+.news-title {
+    margin-bottom: 14px;
 }
 
-/* ===========================================
-   Inputs
-=========================================== */
-
-.stTextInput input {
-
-    background: white !important;
-
-    color: #111827 !important;
-
-    -webkit-text-fill-color: #111827 !important;
-
-    border: 1px solid #D1D5DB;
-
-    border-radius: 10px;
-
-    padding: .65rem;
+.news-time,
+.generated-time {
+    font-size: 13px;
 }
 
-.stTextInput input:focus {
-
-    border: 1px solid #4F46E5;
-
-    box-shadow: 0 0 0 2px rgba(79,70,229,.15);
+.ai-header h3 {
+    margin: 0;
+    font-size: 28px;
 }
 
-/* Disabled text inputs */
-
-.stTextInput input:disabled{
-
-    background:#F9FAFB !important;
-
-    color:#6B7280 !important;
-
-    -webkit-text-fill-color:#6B7280 !important;
-
-    opacity:1 !important;
-
-    cursor:not-allowed;
-
+.ai-header p {
+    margin-top: 8px;
 }
 
-/* ===========================================
-   Buttons
-=========================================== */
+.ai-card h4 {
+    margin-top: 18px;
+}
 
-.stButton > button {
-    width: 100%;
-    height: 44px;
+.ai-card ul {
+    padding-left: 20px;
+}
 
-    background: #4F46E5 !important;
-    color: #FFFFFF !important;
+.ai-card li {
+    margin-bottom: 8px;
+}
 
-    border: none;
-    border-radius: 10px;
+.generated-time {
+    margin-top: 18px;
+}
 
-    font-size: 15px;
+.page-header {
+    margin-bottom: 28px;
+}
+
+.page-header h1 {
+    font-size: 42px;
+    margin-bottom: 8px;
+}
+
+.page-header p {
+    font-size: 17px;
+    margin-bottom: 18px;
+}
+
+/* Shared Badges */
+
+.kpi-badge,
+.stock-change,
+.news-category,
+.news-sentiment {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
     font-weight: 600;
-
-    transition: all 0.25s ease;
 }
 
-.stButton > button:hover {
-    background: #4338CA !important;
-    color: #FFFFFF !important;
+/* Shared Components */
 
-    transform: translateY(-2px);
+.confidence-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    flex-shrink: 0;
+    text-align: center;
 }
 
-.stButton > button:active {
-    background: #3730A3 !important;
-    color: #FFFFFF !important;
+.market-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
 }
 
-.stButton > button p,
-.stButton > button span,
-.stButton > button div {
-    color: #FFFFFF !important;
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    animation: pulse 1.8s infinite;
 }
 
-/* ===========================================
-   Streamlit Containers
-=========================================== */
-
-div[data-testid="stVerticalBlockBorderWrapper"]{
-
-    border:1px solid #E5E7EB;
-
-    border-radius:16px;
-
-    background:white;
-
-    box-shadow:0 2px 10px rgba(0,0,0,.04);
-
-    padding:18px;
-
-}
-
-/* ===========================================
-   Metric Cards
-=========================================== */
-
-div[data-testid="metric-container"]{
-
-    border:1px solid #E5E7EB;
-
-    border-radius:14px;
-
-    background:white;
-
-    padding:16px;
-
-    box-shadow:none;
-}
-
-div[data-testid="metric-container"]:hover{
-
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
-
-}
-
-/* ===========================================
-   Alerts
-=========================================== */
-
-div[data-testid="stAlert"]{
-
-    border-radius:12px;
-}
-
-/* ===========================================
-   Plotly
-=========================================== */
-
-.js-plotly-plot{
-
-    border-radius:14px;
-
-    overflow:hidden;
-}
-
-/* ===========================================
-   Divider
-=========================================== */
-
-hr{
-
-    border:none;
-
-    border-top:1px solid #E5E7EB;
-}
-
-/* ===========================================
-   Smooth Animations
-=========================================== */
-
-*{
-
-    transition:.2s ease;
-}
-
-/* ==========================================
-   KPI Cards
-========================================== */
-
-.kpi-card{
-
-    background:#FFFFFF;
-
-    border:1px solid #E5E7EB;
-
-    border-radius:18px;
-
-    padding:22px;
-
-    transition:.25s;
-
-    box-shadow:0 4px 12px rgba(0,0,0,.04);
-
-    min-height:170px;
-
-}
-
-.kpi-card:hover{
-
-    transform:translateY(-6px);
-
-    box-shadow:0 14px 28px rgba(79,70,229,.12);
-
-}
-
-.kpi-top{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:10px;
-
-    margin-bottom:18px;
-
-}
-
-.kpi-icon{
-
-    font-size:28px;
-
-}
-
-.kpi-title{
-
-    font-size:16px;
-
-    font-weight:600;
-
-    color:#64748B;
-
-}
-
-.kpi-value{
-
-    font-size:42px;
-
-    font-weight:700;
-
-    color:#111827;
-
-    margin-bottom:18px;
-
-}
-
-.kpi-badge{
-
-    display:inline-block;
-
-    padding:6px 14px;
-
-    border-radius:999px;
-
-    color:white;
-
-    font-size:13px;
-
-    font-weight:600;
-
-}
-
-/* ==========================================
-   Trending Stocks
-========================================== */
-
-.stock-card{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:16px;
-
-    border:1px solid #E5E7EB;
-
-    border-radius:14px;
-
-    margin-bottom:14px;
-
-    background:white;
-
-    transition:.25s;
-
-}
-
-.stock-card:hover{
-
-    transform:translateX(6px);
-
-    box-shadow:0 8px 18px rgba(79,70,229,.10);
-
-}
-
-.stock-name{
-
-    font-size:17px;
-
-    font-weight:600;
-
-    color:#111827;
-
-}
-
-.stock-price{
-
-    color:#64748B;
-
-    margin-top:5px;
-
-}
-
-.stock-change{
-
-    background:#DCFCE7;
-
-    color:#16A34A;
-
-    padding:8px 14px;
-
-    border-radius:999px;
-
-    font-weight:600;
-
-}
-
-/* ==========================================
-   News Cards
-========================================== */
-
-.news-card{
-
-    padding:18px;
-
-    border:1px solid #E5E7EB;
-
-    border-radius:14px;
-
-    margin-bottom:16px;
-
-    background:white;
-
-    transition:.25s;
-
-}
-
-.news-card:hover{
-
-    transform:translateY(-4px);
-
-    box-shadow:0 10px 24px rgba(79,70,229,.10);
-
-}
-
-.news-title{
-
-    font-size:17px;
-
-    font-weight:600;
-
-    color:#111827;
-
-    margin-bottom:14px;
-
-}
-
-.news-footer{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    flex-wrap:wrap;
-
-    gap:10px;
-
-}
-
-.news-category{
-
-    background:#EEF2FF;
-
-    color:#4F46E5;
-
-    padding:5px 12px;
-
-    border-radius:999px;
-
-    font-size:13px;
-
-    font-weight:600;
-
-}
-
-.news-time{
-
-    color:#6B7280;
-
-    font-size:13px;
-
-}
-
-.news-sentiment{
-
-    padding:5px 12px;
-
-    border-radius:999px;
-
-    font-size:13px;
-
-    font-weight:600;
-
-}
-
-/* ==========================================
-   AI Recommendation Card
-========================================== */
-
-.ai-card{
-
-    background:linear-gradient(135deg,#EEF2FF,#FFFFFF);
-
-    border-radius:18px;
-
-    padding:24px;
-
-    border:1px solid #E5E7EB;
-
-}
-
-.ai-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:18px;
-
-}
-
-.ai-header h3{
-
-    color:#16A34A;
-
-    margin:0;
-
-    font-size:28px;
-
-}
-
-.ai-header p{
-
-    margin-top:8px;
-
-    color:#64748B;
-
-}
-
-.confidence-circle{
-
-    width:80px;
-    height:80px;
-
-    border-radius:50%;
-
-    background:#4F46E5;
-
-    color:#FFFFFF !important;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:24px;
-
-    font-weight:700;
-
-    line-height:80px;
-
-    text-align:center;
-
-    flex-shrink:0;
-
-    box-shadow:0 8px 20px rgba(79,70,229,.25);
-}
-
-.confidence-circle *{
-    color:#FFFFFF !important;
-}
-
-.ai-card h4{
-
-    margin-top:18px;
-
-    color:#111827;
-
-}
-
-.ai-card ul{
-
-    padding-left:20px;
-
-}
-
-.ai-card li{
-
-    margin-bottom:8px;
-
-    color:#374151;
-
-}
-
-.generated-time{
-
-    margin-top:18px;
-
-    color:#9CA3AF;
-
-    font-size:13px;
-
-}
-
-/* ==========================================
-   Page Header
-========================================== */
-
-.page-header{
-
-    margin-bottom:28px;
-
-}
-
-.page-header h1{
-
-    font-size:42px;
-
-    margin-bottom:8px;
-
-}
-
-.page-header p{
-
-    color:#64748B;
-
-    font-size:17px;
-
-    margin-bottom:18px;
-
-}
-
-.market-status{
-
-    display:inline-flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    background:#ECFDF5;
-
-    color:#065F46;
-
-    padding:10px 18px;
-
-    border-radius:999px;
-
-    font-size:14px;
-
-    font-weight:600;
-
-}
-
-.status-dot{
-
-    width:10px;
-
-    height:10px;
-
-    background:#10B981;
-
-    border-radius:50%;
-
-    animation:pulse 1.8s infinite;
-
-}
-
-@keyframes pulse{
-
-    0%{
-
-        box-shadow:0 0 0 0 rgba(16,185,129,.6);
-
+/* Animations */
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16,185,129,.6);
     }
 
-    70%{
-
-        box-shadow:0 0 0 10px rgba(16,185,129,0);
-
+    70% {
+        box-shadow: 0 0 0 10px rgba(16,185,129,0);
     }
 
-    100%{
-
-        box-shadow:0 0 0 0 rgba(16,185,129,0);
-
+    100% {
+        box-shadow: 0 0 0 0 rgba(16,185,129,0);
     }
-
 }
 
-/* ==========================================
-   Hide Image Fullscreen Button
-========================================== */
+/* Image Toolbar */
 
-button[data-testid="StyledFullScreenButton"]{
-    display:none !important;
+button[data-testid="StyledFullScreenButton"],
+[data-testid="StyledFullScreenButton"],
+[data-testid="stImage"] button,
+button[title="View fullscreen"],
+button[data-testid="stBaseButton-elementToolbar"],
+button[aria-label="Fullscreen"],
+button[kind="elementToolbar"] {
+    display: none !important;
 }
 
-/* Older Streamlit versions */
+/* Sidebar Spacing */
 
-[data-testid="stImage"] button{
-    display:none !important;
+section[data-testid="stSidebar"] .block-container {
+    padding-top: 0.6rem !important;
 }
 
-/* Hide image fullscreen button */
+/* Plotly */
 
-button[title="View fullscreen"]{
-    display:none !important;
-}
-
-[data-testid="StyledFullScreenButton"]{
-    display:none !important;
-}
-
-[data-testid="stImage"] button{
-    display:none !important;
-}
-
-/* ==========================================
-   Hide Streamlit Image Toolbar
-========================================== */
-
-button[data-testid="stBaseButton-elementToolbar"]{
-    display:none !important;
-}
-
-button[aria-label="Fullscreen"]{
-    display:none !important;
-}
-
-button[kind="elementToolbar"]{
-    display:none !important;
-}
-
-/* Sidebar padding */
-
-section[data-testid="stSidebar"] .block-container{
-    padding-top:0.6rem !important;
-}
-
-div[data-testid="stVerticalBlockBorderWrapper"]:hover {
-
-    transform: translateY(-3px);
-
-    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-
-}
-
-/* Force Streamlit text input colors */
-
-[data-testid="stTextInput"] input{
-
-    color:#111827 !important;
-
-    -webkit-text-fill-color:#111827 !important;
-
-}
-
-[data-testid="stTextInput"] input:disabled{
-
-    color:#6B7280 !important;
-
-    -webkit-text-fill-color:#6B7280 !important;
-
-    opacity:1 !important;
-
+.js-plotly-plot {
+    border-radius: 14px;
+    overflow: hidden;
 }

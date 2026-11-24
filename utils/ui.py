@@ -1,22 +1,17 @@
+
 import streamlit as st
 
 
 def page_header(title: str, subtitle: str = ""):
+
+    settings = st.session_state.get("settings", {})
+    theme = settings.get("theme", "System")
+
     st.markdown(
         f"""
-        <div style="
-            padding:22px;
-            border-radius:16px;
-            border:1px solid #E5E7EB;
-            background:#F8FAFC;
-            margin-bottom:20px;
-        ">
-            <h2 style="margin-bottom:6px;color:#111827;">
-                {title}
-            </h2>
-            <p style="color:#6B7280;margin:0;">
-                {subtitle}
-            </p>
+        <div class="finsight-page-header" data-theme="{theme.lower()}">
+            <h2>{title}</h2>
+            <p>{subtitle}</p>
         </div>
         """,
         unsafe_allow_html=True,
