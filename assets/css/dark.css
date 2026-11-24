@@ -42,9 +42,7 @@ section[data-testid="stSidebar"] span{
     color:white !important;
 }
 
-section[data-testid="stSidebar"] * {
-    color: #1F2937;
-}
+
 
 /* ===========================================
    Typography
