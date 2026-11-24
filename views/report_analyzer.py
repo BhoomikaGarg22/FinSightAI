@@ -1,6 +1,19 @@
 import streamlit as st
 from utils.navigation import navigate
+from PyPDF2 import PdfReader
+from backend.gemini.gemini_client import ask_gemini
 
+def extract_pdf_text(uploaded_file):
+    reader = PdfReader(uploaded_file)
+    text = ""
+
+    for page in reader.pages:
+        page_text = page.extract_text()
+
+        if page_text:
+            text += page_text + "\n"
+
+    return text
 
 def show_report_analyzer():
 
@@ -46,24 +59,48 @@ def show_report_analyzer():
                 if uploaded_file.type and uploaded_file.type.startswith("image/"):
                     st.image(uploaded_file, caption=uploaded_file.name, use_column_width=True)
 
-                if st.button(
-                    "Analyze Report",
-                    key="analyze_report",
-                    use_container_width=True
-                ):
-                    st.session_state.report_analyzed = True
-                    st.session_state.report_uploaded = True
-                    st.session_state.uploaded_file = uploaded_file
-                    st.success("Report analysis started successfully")
+                if st.button("Analyze Report", key="analyze_report", use_container_width=True):
+
+                 with st.spinner("Extracting PDF and generating AI insights..."):
+
+                  extracted_text = extract_pdf_text(uploaded_file)
+
+                  if not extracted_text.strip():
+                   st.error("No readable text found in this PDF.")
+                   st.stop()
+
+                  analysis_prompt = """
+                  Analyze the uploaded financial report and provide:
+
+                  1. Executive Summary
+                  2. Financial Highlights (only figures available in the report)
+                  3. Key Risks
+                  4. Growth Opportunities
+                  5. Overall Financial Outlook
+
+                  Do not invent any figures or information.
+                  Clearly mention when information is unavailable.
+                  """
+
+                  analysis = ask_gemini(
+                   question=analysis_prompt,
+                   context=extracted_text[:25000]
+                  )
+
+                  st.session_state.report_analysis = analysis
+                  st.session_state.report_analyzed = True
+                  st.session_state.report_uploaded = True
+                  st.session_state.summary = analysis
+
+                
 
                 if st.session_state.report_analyzed and uploaded_file is not None:
                     st.info("Analysis results are now available for the uploaded PDF.")
                 
-                else:
 
-                 st.info(
-                    "Upload a financial report to begin AI analysis."
-                )
+                if st.button("Test PDF Extraction"):
+                 extracted_text = extract_pdf_text(uploaded_file)
+                 st.write(extracted_text[:3000])
 
     with right:
 
@@ -111,112 +148,13 @@ def show_report_analyzer():
         # FINANCIAL METRICS
         # =====================================================
 
-          st.subheader("Financial Highlights")
+          
+          if st.session_state.report_analyzed:
 
-          c1, c2, c3, c4 = st.columns(4)
-          c1.metric("Revenue", "$394B", "+18%")
-          c2.metric("Net Income", "$98B", "+12%")
-          c3.metric("EPS", "$6.14", "+9%")
-          c4.metric("Operating Margin", "30%", "+2%")
-
-          st.write("")
-
-        # =====================================================
-        # AI RESULTS
-        # =====================================================        
-          tab1, tab2, tab3, tab4 = st.tabs(
-            [
-                "Summary",
-                "Risks",
-                "Opportunities",
-                "Recommendation"
-            ]
-        )
-
-          with tab1:
-
-            st.success("""
-             ### Executive Summary
-
-             • Revenue increased by **18%**
-
-             • Profit margins improved.
-
-             • Cash reserves remain strong.
-
-             • AI investments continue driving growth.
-
-             • Management outlook remains positive.
-             """)
-
-          with tab2:
-
-            st.warning("""
-            ### Key Risks
-
-             • Regulatory uncertainty
-
-             • High AI competition
-
-             • Supply chain dependency
-
-             • Currency fluctuations
-
-             • Premium valuation
-             """)
-
-            with tab3:
-
-             st.info("""
-         ### Growth Opportunities
-
-         • AI expansion
-
-         • Cloud business growth
-
-         • Emerging markets
-
-         • Subscription services
-
-         • Product innovation
-         """)
-
-          with tab4:
-
-            st.success("""
-         ## BUY
-
-         **Confidence Score: 92%**
-
-         ### Why?
-
-         Strong balance sheet
-
-         Healthy cash flow
-
-         Positive earnings trend
-
-         Attractive long-term outlook
-         """)
-
-          st.write("")
-          summary = """
-          Executive Summary
-
-          • Revenue increased by 18%
-
-          • Profit margins improved.
-
-          • Cash reserves remain strong.
-
-          • AI investments continue driving growth.
-
-          • Management outlook remains positive.
-
-          Recommendation: BUY
-
-          Confidence: 92%
-          """
+           with st.container(border=True):
+            st.subheader("AI Report Analysis")
+            st.success("Analysis Ready")
+            st.markdown(st.session_state.report_analysis)
     # =====================================================
     # QUICK ACTIONS
     # =====================================================

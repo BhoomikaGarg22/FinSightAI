@@ -109,7 +109,7 @@ def create_user_profile(user_id: int):
 
         VALUES (
 
-            ?, ?, ?, ?, ?
+            ?, ?, ?, ?, ?,
 
             ?, ?, ?, ?,
 
